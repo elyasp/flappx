@@ -1,21 +1,18 @@
 {
-    "compilerOptions": {
-      "outDir": "./public/js/",
-      "noImplicitAny": true,
-      "module": "es6",
-      "moduleResolution": "node",
-      "target": "es5",
-      "jsx": "react",
-      "allowSyntheticDefaultImports": true,
-      "allowJs": true,
-      "lib":[
-          "es2015", "dom"
-      ]
-    },
-    "include": [
-        "src/client/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
-  }
+  "compilerOptions": {
+    "outDir": "./public/js/",
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es6",
+    "jsx": "react",
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "lib": ["es2015", "dom"],
+    "sourceMap": true
+  },
+  "include": ["src/client/*"],
+  "exclude": ["node_modules"]
+}

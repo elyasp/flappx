@@ -5,9 +5,9 @@ import DB from "./db";
 const router = express.Router();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-router.get("/", (req, res, next) => {
-  res.sendStatus(200);
-});
+// router.get("/", (req, res, next) => {
+//   res.sendStatus(200);
+// });
 
 // Get all bundles
 router.get("/bundles", async (req, res, next) => {
