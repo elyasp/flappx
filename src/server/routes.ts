@@ -3,11 +3,8 @@ const bodyParser = require("body-parser");
 import DB from "./db";
 
 const router = express.Router();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
-
-// router.get("/", (req, res, next) => {
-//   res.sendStatus(200);
-// });
+const urlencodedParser = bodyParser.urlencoded({ extended: true });
+router.use(bodyParser.json());
 
 // Get all bundles
 router.get("/bundles", async (req, res, next) => {
@@ -30,13 +27,14 @@ router.post("/bundles/add", urlencodedParser, async (req, res, next) => {
       res.sendStatus(200);
     })
     .catch((error) => {
-      console.log(error);
+      console.log("Error Adding to Database>>>>>>", error);
       res.sendStatus(500);
     });
 });
 
 // Delete a bundle
-router.delete("/bundles/delete", urlencodedParser, async (req, res, next) => {
+router.post("/bundles/delete", async (req, res, next) => {
+  console.log("ROUTE", req.body);
   const { bundle } = req.body;
 
   await DB.Bundles.remove(bundle)
