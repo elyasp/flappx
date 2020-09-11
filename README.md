@@ -6,6 +6,7 @@ To Run the App locally,
 1. CD to root of app
 2. npm install
 3. npm run dev
+4. Go to localhost:3000 in browser
 
 TODO:
 
