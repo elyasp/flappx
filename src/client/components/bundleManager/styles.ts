@@ -1,36 +1,43 @@
 import styled from "styled-components";
-
-export const TableWrap = styled.div`
-  display: flex;
-  justify-content: flex-start;
-
-  table {
-    padding: 2em;
-    border: solid 3px red;
-    border-collapse: collapse;
-
-    thead {
-      min-height: 2em;
-      text-align: left;
-      background-color: #4caf50;
-      background-color: black;
-      color: white;
-    }
-  }
-`;
+import { media, TappxGradient, LayeredBoxShadow } from "../../styles";
 
 export const ManagerWrap = styled.div`
-  padding: 1em;
+  padding-top: 1em;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
+  background-color: #545454;
 `;
 
 export const BundleContainer = styled.div`
-  width: 100vw;
+  width: -webkit-fill-available;
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  /* overflow-y: auto; */
+  overflow-y: auto;
+`;
+
+export const Searchbar = styled.input`
+  outline: none;
+  width: 35vw;
+  font-size: 1em;
+  height: 2em;
+  margin: 1em;
+  padding: 0 1em;
+  border: solid 2px rgb(250, 0, 67);
+  border-radius: 50px;
+
+  ${media.xl(`
+    width: 70vw;;
+  `)}
+`;
+
+export const ModalButton = styled.button`
+  color: white;
+  outline: none;
+  border: none;
+  padding: 0.5em;
+  ${TappxGradient}
+  ${LayeredBoxShadow}
 `;

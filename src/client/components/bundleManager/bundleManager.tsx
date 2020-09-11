@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BundleItem } from "../bundleItem";
 import { Modal } from "../modal";
 import { getBundles } from "../../services";
-import { BundleContainer, ManagerWrap } from "./styles";
+import { BundleContainer, ManagerWrap, Searchbar, ModalButton } from "./styles";
 
 export interface IBundle {
   name: string;
@@ -25,7 +25,12 @@ export const BundleManager = () => {
   return (
     <ManagerWrap>
       {/* <Modal /> */}
-      <button>Add Bundle</button>
+      <ModalButton>New Bundle</ModalButton>
+      <Searchbar
+        type="text"
+        placeholder="SEARCH"
+        // onChange={(e) => setSearch(e.target.value)}
+      />
       <BundleContainer>
         {bundles.map((item) => {
           return <BundleItem key={item.bundle} bundlePackage={item} />;

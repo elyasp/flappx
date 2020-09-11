@@ -1,49 +1,70 @@
-import styled from "styled-components";
-import { media } from "../../styles/media";
+import styled, { css } from "styled-components";
+import { media, TappxGradient, LayeredBoxShadow } from "../../styles";
 
 export const Card = styled.div`
-  min-width: 400px;
-  box-sizing: border-box;
   height: fit-content;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
   max-width: fit-content;
-  border: solid 3px red;
-  margin: 1em;
+  border-radius: 20px;
+  margin-bottom: 3em;
+  overflow: hidden;
+  display: grid;
+  grid-template: auto 1fr auto / auto 1fr auto;
+  ${LayeredBoxShadow}
 
   ${media.md(`
-  min-width: 70vw;
+      font-size: 2vw;
   `)}
 `;
 
 export const UpperPart = styled.div`
-  min-height: 5em;
-  display: flex;
-  justify-content: space-between;
+  /* min-height: 5em; */
 `;
 export const Package = styled.div`
-  background-color: #2a265f;
+  grid-column: 1 / 2;
+  ${TappxGradient}
   color: #fff;
   padding: 30px;
   width: 250px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* min-width: 60%; */
+
+  ${media.md(`
+      width: 30vw;
+      height: 38px;
+  `)}
 `;
+
 export const Company = styled.div`
+  background-color: #1f383f;
+  color: white;
   padding: 30px;
+  grid-column: 2 / 3;
   position: relative;
   width: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  ${media.md(`
+  width: 20vw;
+  `)}
 `;
 
-export const PackageName = styled.div``;
-export const Bundle = styled.div``;
+export const PackageName = styled.div`
+  p {
+    text-decoration-line: overline;
+    font-size: 1em;
+  }
+
+  h1 {
+    ${media.md(`
+      font-size: 4vw;
+  `)}
+  }
+`;
+
 export const CompanyName = styled.div``;
 export const CompanyEmail = styled.div``;
 export const Footer = styled.div`
@@ -51,6 +72,7 @@ export const Footer = styled.div`
   background-color: pink;
   min-height: 30px;
   width: -webkit-fill-available;
+  grid-column: 1 / 4;
   display: flex;
   justify-content: space-between;
   align-items: center;

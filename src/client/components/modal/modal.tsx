@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createBundle } from "../../services";
 
-export interface IBundle {
+interface IBundle {
   name: string;
   bundle: string;
   company: string;
@@ -11,10 +11,10 @@ export interface IBundle {
 }
 
 export const Modal = () => {
-  const [inputBundle, setInputBundle] = useState<IBundle>();
+  const [inputBundle, setInputBundle] = useState<IBundle[]>();
   console.log("MODAL STATE", inputBundle);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     createBundle(inputBundle)
@@ -26,7 +26,7 @@ export const Modal = () => {
       });
   };
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setInputBundle({ ...inputBundle, [e.target.name]: e.target.value });
   };

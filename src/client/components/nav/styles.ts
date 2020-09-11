@@ -1,9 +1,8 @@
 import styled from "styled-components";
-import { media } from "../../styles/media";
+import { media, TappxGradient } from "../../styles";
 
 export const Header = styled.nav`
-  height: fit-content;
-  background-color: #ef003d;
+  ${TappxGradient}
   padding: 1em;
   display: flex;
   justify-content: space-evenly;
@@ -11,12 +10,8 @@ export const Header = styled.nav`
   flex-direction: column;
 
   div {
-    min-width: 500px;
-    padding-top: 1em;
-
-    ${media.lg(`
-  min-width: 200px;
-  `)}
+    min-width: 30vw;
+    margin-top: 1em;
   }
 
   h3 {
@@ -25,8 +20,8 @@ export const Header = styled.nav`
     font-style: italic;
     font-size: 2em;
 
-    ${media.lg(`
-      font-size: 1em;
+    ${media.md(`
+      font-size: 0.8em;
   `)}
   }
 `;
