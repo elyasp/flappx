@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./public/js/",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es6",

@@ -112,7 +112,7 @@ export const Modal = (props: ToggleProps) => {
             <div>
               <label htmlFor="category">Category</label>
               <select required name="category" onChange={onChange}>
-                <option selected="true" disabled="disabled">
+                <option selected={true} disabled={true}>
                   Please select a category
                 </option>
                 <option value="Tool">Tool</option>

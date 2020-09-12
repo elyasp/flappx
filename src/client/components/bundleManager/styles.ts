@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { media, TappxGradient, LayeredBoxShadow } from "../../styles";
 
 export const ManagerWrap = styled.div`
+  height: inherit;
   padding-top: 1em;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  background-color: #545454;
 `;
 
 export const AddButton = styled.button`
@@ -43,4 +43,12 @@ export const Searchbar = styled.input`
   `)}
 `;
 
-export const ModalButton = styled.button``;
+export const NoBundles = styled.div`
+  margin-top: 5em;
+  display: grid;
+  place-items: center;
+
+  ${media.lg(`
+  font-size: 5vw;
+  `)}
+`;

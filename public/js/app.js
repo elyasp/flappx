@@ -2684,7 +2684,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(true);
 ___CSS_LOADER_EXPORT___.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, "* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n}\r\n", "",{"version":3,"sources":["webpack://src/client/index.css"],"names":[],"mappings":"AAEA;EACE,4BAA4B;AAC9B;;AAEA;EACE,SAAS;AACX","sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap\");\r\n\r\n* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n}\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, "* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  background-color: #545454;\r\n}\r\n", "",{"version":3,"sources":["webpack://src/client/index.css"],"names":[],"mappings":"AAEA;EACE,4BAA4B;AAC9B;;AAEA;EACE,SAAS;EACT,yBAAyB;AAC3B","sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap\");\r\n\r\n* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  background-color: #545454;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -33232,18 +33232,25 @@ const components_1 = __webpack_require__(/*! ../../components */ "./src/client/c
 const services_1 = __webpack_require__(/*! ../../services */ "./src/client/services/index.ts");
 const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/bundleManager/styles.ts");
 exports.BundleManager = () => {
-    const [bundles, setBundles] = react_1.useState([]);
+    const [bundles, setBundles] = react_1.useState();
     const [isOpen, setIsOpen] = react_1.useState(false);
+    console.log(bundles);
     react_1.useEffect(() => {
-        services_1.getBundles().then(setBundles);
+        services_1.getBundles()
+            .then(setBundles)
+            .catch((error) => {
+            console.log(error);
+        });
     }, []);
-    return (react_1.default.createElement(styles_1.ManagerWrap, null,
+    return (react_1.default.createElement(react_1.default.Fragment, null,
         isOpen && react_1.default.createElement(components_1.Modal, { closeModal: () => setIsOpen(false) }),
-        react_1.default.createElement(styles_1.AddButton, { onClick: () => setIsOpen(true) }, "New Bundle"),
-        react_1.default.createElement(styles_1.Searchbar, { type: "text", placeholder: "SEARCH" }),
-        react_1.default.createElement(styles_1.BundleContainer, null, bundles.map((item) => {
-            return react_1.default.createElement(components_1.BundleItem, { key: item.bundle, bundlePackage: item });
-        }))));
+        bundles ? (react_1.default.createElement(styles_1.ManagerWrap, null,
+            react_1.default.createElement(styles_1.AddButton, { onClick: () => setIsOpen(true) }, "New Bundle"),
+            react_1.default.createElement(styles_1.Searchbar, { type: "text", placeholder: "SEARCH" }),
+            react_1.default.createElement(styles_1.BundleContainer, null, bundles.map((item) => {
+                return react_1.default.createElement(components_1.BundleItem, { key: item.bundle, bundlePackage: item });
+            })))) : (react_1.default.createElement(styles_1.NoBundles, null,
+            react_1.default.createElement(styles_1.AddButton, { onClick: () => setIsOpen(true) }, "Add a new Bundle")))));
 };
 
 
@@ -33279,16 +33286,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModalButton = exports.Searchbar = exports.BundleContainer = exports.AddButton = exports.ManagerWrap = void 0;
+exports.NoBundles = exports.Searchbar = exports.BundleContainer = exports.AddButton = exports.ManagerWrap = void 0;
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.ManagerWrap = styled_components_1.default.div `
+  height: inherit;
   padding-top: 1em;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
-  background-color: #545454;
 `;
 exports.AddButton = styled_components_1.default.button `
   color: white;
@@ -33320,7 +33327,15 @@ exports.Searchbar = styled_components_1.default.input `
     width: 70vw;;
   `)}
 `;
-exports.ModalButton = styled_components_1.default.button ``;
+exports.NoBundles = styled_components_1.default.div `
+  margin-top: 5em;
+  display: grid;
+  place-items: center;
+
+  ${styles_1.media.lg(`
+  font-size: 5vw;
+  `)}
+`;
 
 
 /***/ }),
@@ -33387,6 +33402,10 @@ exports.Footer = void 0;
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.Footer = styled_components_1.default.footer `
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   display: grid;
   place-items: center;
   height: 10vh;
@@ -33535,7 +33554,7 @@ exports.Modal = (props) => {
                     react_1.default.createElement("div", null,
                         react_1.default.createElement("label", { htmlFor: "category" }, "Category"),
                         react_1.default.createElement("select", { required: true, name: "category", onChange: onChange },
-                            react_1.default.createElement("option", { selected: "true", disabled: "disabled" }, "Please select a category"),
+                            react_1.default.createElement("option", { selected: true, disabled: true }, "Please select a category"),
                             react_1.default.createElement("option", { value: "Tool" }, "Tool"),
                             react_1.default.createElement("option", { value: "Music" }, "Music"),
                             react_1.default.createElement("option", { value: "Games" }, "Games"),
