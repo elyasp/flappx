@@ -10,6 +10,16 @@ export const ManagerWrap = styled.div`
   background-color: #545454;
 `;
 
+export const AddButton = styled.button`
+  color: white;
+  outline: none;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+  ${TappxGradient}
+  ${LayeredBoxShadow}
+`;
+
 export const BundleContainer = styled.div`
   width: -webkit-fill-available;
   display: flex;
@@ -33,11 +43,4 @@ export const Searchbar = styled.input`
   `)}
 `;
 
-export const ModalButton = styled.button`
-  color: white;
-  outline: none;
-  border: none;
-  padding: 0.5em;
-  ${TappxGradient}
-  ${LayeredBoxShadow}
-`;
+export const ModalButton = styled.button``;

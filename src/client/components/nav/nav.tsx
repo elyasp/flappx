@@ -1,6 +1,6 @@
 import React from "react";
 import { Header } from "./styles";
-import Tappx from "./tappx-logo.svg";
+import Tappx from "../../images/tappx-logo.svg";
 
 export const Nav = () => {
   return (

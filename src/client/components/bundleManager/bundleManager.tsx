@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { BundleItem } from "../bundleItem";
-import { Modal } from "../modal";
+import { BundleItem, Modal } from "../../components";
 import { getBundles } from "../../services";
-import { BundleContainer, ManagerWrap, Searchbar, ModalButton } from "./styles";
+import { BundleContainer, ManagerWrap, Searchbar, AddButton } from "./styles";
 
 export interface IBundle {
   name: string;
@@ -17,6 +16,7 @@ export interface IAppProps {}
 
 export const BundleManager = () => {
   const [bundles, setBundles] = useState<IBundle[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     getBundles().then(setBundles);
@@ -25,7 +25,10 @@ export const BundleManager = () => {
   return (
     <ManagerWrap>
       {/* <Modal /> */}
-      <ModalButton>New Bundle</ModalButton>
+
+      {isOpen && <Modal closeModal={() => setIsOpen(false)}></Modal>}
+
+      <AddButton onClick={() => setIsOpen(true)}>New Bundle</AddButton>
       <Searchbar
         type="text"
         placeholder="SEARCH"

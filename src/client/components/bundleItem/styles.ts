@@ -19,6 +19,7 @@ export const Card = styled.div`
 export const UpperPart = styled.div`
   /* min-height: 5em; */
 `;
+
 export const Package = styled.div`
   grid-column: 1 / 2;
   ${TappxGradient}
@@ -55,7 +56,7 @@ export const Company = styled.div`
 export const PackageName = styled.div`
   p {
     text-decoration-line: overline;
-    font-size: 1em;
+    font-size: 1.3em;
   }
 
   h1 {
