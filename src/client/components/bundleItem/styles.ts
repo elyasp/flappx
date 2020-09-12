@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components";
 import { media, TappxGradient, LayeredBoxShadow } from "../../styles";
 
+interface IActiveFooterProps {
+  active: boolean;
+}
+
 export const Card = styled.div`
   height: fit-content;
   max-width: fit-content;
@@ -68,15 +72,35 @@ export const PackageName = styled.div`
 
 export const CompanyName = styled.div``;
 export const CompanyEmail = styled.div``;
-export const Footer = styled.div`
-  padding: 0 1em;
-  background-color: pink;
-  min-height: 30px;
+
+export const Footer = styled.div<IActiveFooterProps>`
+  p {
+    margin: 0.1em;
+    color: white;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  background-color: ${({ active }) => (active ? "#33a349" : "#4a4a4a")};
+  min-height: 1em;
   width: -webkit-fill-available;
   grid-column: 1 / 4;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
+
 export const Active = styled.div``;
-export const Delete = styled.div``;
+export const DeleteButton = styled.button`
+  border-radius: 5px;
+  font-size: 1em;
+  position: absolute;
+  bottom: -1em;
+  right: 1em;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+  ${TappxGradient}
+  ${LayeredBoxShadow}
+`;

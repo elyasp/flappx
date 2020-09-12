@@ -34,6 +34,7 @@ export const Modal = (props: ToggleProps) => {
     createBundle(inputBundle)
       .then((res) => {
         console.log("CREATED", res);
+        window.location.reload(true);
       })
       .catch((error) => {
         console.log("Could not add bundle", error);

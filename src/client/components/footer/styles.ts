@@ -2,15 +2,16 @@ import styled from "styled-components";
 import { TappxGradient } from "../../styles";
 
 export const Footer = styled.footer`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  display: grid;
-  place-items: center;
-  height: 10vh;
+  height: 5vh;
   color: white;
-  ${TappxGradient}
+  background-color: #141a1d;
 
   a {
     text-decoration-line: none;

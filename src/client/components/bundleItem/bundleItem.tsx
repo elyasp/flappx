@@ -7,8 +7,7 @@ import {
   PackageName,
   Company,
   CompanyName,
-  Active,
-  Delete,
+  DeleteButton,
   CompanyEmail,
   Footer,
 } from "./styles";
@@ -26,27 +25,23 @@ interface IProps {
   bundlePackage: IBundle;
 }
 
-interface IDelete {
-  bundle: string;
-}
-
 export const BundleItem: React.FC<IProps> = ({ bundlePackage }) => {
-  const [bundleDelete, setBundleDelete] = useState<IDelete>();
+  const toggleDelete = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
+    const bundleToDelete = { bundle: e.target.value };
+
+    deleteBundle(bundleToDelete)
+      .then(() => {
+        window.location.reload(true);
+      })
+      .catch((error) => {
+        console.log("Could not add bundle", error);
+      });
+  };
 
   const handleDelete = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    deleteBundle(bundleDelete).catch((error) => {
-      console.log("Could not add bundle", error);
-    });
   };
-
-  const toggleDelete = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    setBundleDelete({ ...bundleDelete, [e.target.name]: e.target.value });
-  };
-
-  console.log("STATE??>", bundleDelete);
 
   return (
     <Card>
@@ -62,11 +57,13 @@ export const BundleItem: React.FC<IProps> = ({ bundlePackage }) => {
           {bundlePackage.company}
         </CompanyName>
         <CompanyEmail>{bundlePackage.email}</CompanyEmail>
+        <DeleteButton value={bundlePackage.bundle} onClick={toggleDelete}>
+          Delete
+        </DeleteButton>
       </Company>
       <UpperPart></UpperPart>
-      <Footer>
-        <Active>Active O</Active>
-        <Delete>Delete</Delete>
+      <Footer active={bundlePackage.active}>
+        {bundlePackage.active ? <p>Active</p> : <p>Not active</p>}
       </Footer>
     </Card>
   );

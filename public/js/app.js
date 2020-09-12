@@ -33030,43 +33030,29 @@ exports.App = () => {
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BundleItem = void 0;
-const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const services_1 = __webpack_require__(/*! ../../services */ "./src/client/services/index.ts");
 const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/bundleItem/styles.ts");
 exports.BundleItem = ({ bundlePackage }) => {
-    const [bundleDelete, setBundleDelete] = react_1.useState();
-    const handleDelete = (e) => {
+    const toggleDelete = (e) => {
         e.preventDefault();
-        services_1.deleteBundle(bundleDelete).catch((error) => {
+        const bundleToDelete = { bundle: e.target.value };
+        services_1.deleteBundle(bundleToDelete)
+            .then(() => {
+            window.location.reload(true);
+        })
+            .catch((error) => {
             console.log("Could not add bundle", error);
         });
     };
-    const toggleDelete = (e) => {
+    const handleDelete = (e) => {
         e.preventDefault();
-        setBundleDelete(Object.assign(Object.assign({}, bundleDelete), { [e.target.name]: e.target.value }));
     };
-    console.log("STATE??>", bundleDelete);
     return (react_1.default.createElement(styles_1.Card, null,
         react_1.default.createElement(styles_1.Package, null,
             react_1.default.createElement(styles_1.PackageName, null,
@@ -33076,11 +33062,10 @@ exports.BundleItem = ({ bundlePackage }) => {
             react_1.default.createElement(styles_1.CompanyName, null,
                 react_1.default.createElement("small", null, "made by "),
                 bundlePackage.company),
-            react_1.default.createElement(styles_1.CompanyEmail, null, bundlePackage.email)),
+            react_1.default.createElement(styles_1.CompanyEmail, null, bundlePackage.email),
+            react_1.default.createElement(styles_1.DeleteButton, { value: bundlePackage.bundle, onClick: toggleDelete }, "Delete")),
         react_1.default.createElement(styles_1.UpperPart, null),
-        react_1.default.createElement(styles_1.Footer, null,
-            react_1.default.createElement(styles_1.Active, null, "Active O"),
-            react_1.default.createElement(styles_1.Delete, null, "Delete"))));
+        react_1.default.createElement(styles_1.Footer, { active: bundlePackage.active }, bundlePackage.active ? react_1.default.createElement("p", null, "Active") : react_1.default.createElement("p", null, "Not active"))));
 };
 
 
@@ -33116,7 +33101,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Delete = exports.Active = exports.Footer = exports.CompanyEmail = exports.CompanyName = exports.PackageName = exports.Company = exports.Package = exports.UpperPart = exports.Card = void 0;
+exports.DeleteButton = exports.Active = exports.Footer = exports.CompanyEmail = exports.CompanyName = exports.PackageName = exports.Company = exports.Package = exports.UpperPart = exports.Card = void 0;
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.Card = styled_components_1.default.div `
@@ -33182,17 +33167,35 @@ exports.PackageName = styled_components_1.default.div `
 exports.CompanyName = styled_components_1.default.div ``;
 exports.CompanyEmail = styled_components_1.default.div ``;
 exports.Footer = styled_components_1.default.div `
-  padding: 0 1em;
-  background-color: pink;
-  min-height: 30px;
+  p {
+    margin: 0.1em;
+    color: white;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  background-color: ${({ active }) => (active ? "#33a349" : "#4a4a4a")};
+  min-height: 1em;
   width: -webkit-fill-available;
   grid-column: 1 / 4;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 exports.Active = styled_components_1.default.div ``;
-exports.Delete = styled_components_1.default.div ``;
+exports.DeleteButton = styled_components_1.default.button `
+  border-radius: 5px;
+  font-size: 1em;
+  position: absolute;
+  bottom: -1em;
+  right: 1em;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+  ${styles_1.TappxGradient}
+  ${styles_1.LayeredBoxShadow}
+`;
 
 
 /***/ }),
@@ -33400,17 +33403,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Footer = void 0;
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
-const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.Footer = styled_components_1.default.footer `
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  display: grid;
-  place-items: center;
-  height: 10vh;
+  height: 5vh;
   color: white;
-  ${styles_1.TappxGradient}
+  background-color: #141a1d;
 
   a {
     text-decoration-line: none;
@@ -33510,6 +33513,7 @@ exports.Modal = (props) => {
         services_1.createBundle(inputBundle)
             .then((res) => {
             console.log("CREATED", res);
+            window.location.reload(true);
         })
             .catch((error) => {
             console.log("Could not add bundle", error);

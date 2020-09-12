@@ -10,8 +10,11 @@ To Run the App locally,
 
 TODO:
 
-1. Create modal
+1. Introduce category to card
 2. Fix Searchbar
-3. implement Deletebutton, Active status header
-4. add config data to env
-5. deploy to heroku
+3. Fix end of page overflow into fixed footer
+4. Reconfigure color schemes
+5. Write regex for android package name
+6. Remove typescript errors
+7. Configure n seed ClearDB on Heroku
+8. Update readme with findings, instructions, ideas, and opinion
