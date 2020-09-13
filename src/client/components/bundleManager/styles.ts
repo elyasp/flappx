@@ -2,12 +2,13 @@ import styled from "styled-components";
 import { media, TappxGradient, LayeredBoxShadow } from "../../styles";
 
 export const ManagerWrap = styled.div`
-  height: inherit;
+  min-height: calc(100vh - 5vh);
   padding-top: 1em;
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   align-items: center;
   flex-direction: column;
+  overflow-y: auto;
 `;
 
 export const AddButton = styled.button`
@@ -23,9 +24,9 @@ export const AddButton = styled.button`
 export const BundleContainer = styled.div`
   width: -webkit-fill-available;
   display: flex;
-  flex-flow: column wrap;
   align-items: center;
-  overflow-y: auto;
+  justify-content: center;
+  flex-flow: row wrap;
 `;
 
 export const Searchbar = styled.input`
@@ -33,7 +34,7 @@ export const Searchbar = styled.input`
   width: 35vw;
   font-size: 1em;
   height: 2em;
-  margin: 1em;
+  margin: 2em;
   padding: 0 1em;
   border: solid 2px rgb(250, 0, 67);
   border-radius: 50px;
@@ -47,8 +48,4 @@ export const NoBundles = styled.div`
   margin-top: 5em;
   display: grid;
   place-items: center;
-
-  ${media.lg(`
-  font-size: 5vw;
-  `)}
 `;

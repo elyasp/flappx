@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import { deleteBundle } from "../../services";
 import {
   Card,
-  UpperPart,
   Package,
   PackageName,
+  CategoryLabel,
   Company,
-  CompanyName,
   DeleteButton,
-  CompanyEmail,
   Footer,
 } from "./styles";
 
@@ -26,7 +24,7 @@ interface IProps {
 }
 
 export const BundleItem: React.FC<IProps> = ({ bundlePackage }) => {
-  const toggleDelete = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+  const handleDelete = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault();
     const bundleToDelete = { bundle: e.target.value };
 
@@ -39,10 +37,6 @@ export const BundleItem: React.FC<IProps> = ({ bundlePackage }) => {
       });
   };
 
-  const handleDelete = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
-
   return (
     <Card>
       <Package>
@@ -50,18 +44,18 @@ export const BundleItem: React.FC<IProps> = ({ bundlePackage }) => {
           <h1>{bundlePackage.name}</h1>
           <p>{bundlePackage.bundle}</p>
         </PackageName>
+        <CategoryLabel>{bundlePackage.category}</CategoryLabel>
       </Package>
       <Company>
-        <CompanyName>
+        <div>
           <small>made by </small>
           {bundlePackage.company}
-        </CompanyName>
-        <CompanyEmail>{bundlePackage.email}</CompanyEmail>
-        <DeleteButton value={bundlePackage.bundle} onClick={toggleDelete}>
-          Delete
+        </div>
+        <div>{bundlePackage.email}</div>
+        <DeleteButton value={bundlePackage.bundle} onClick={handleDelete}>
+          <small>DELETE</small>
         </DeleteButton>
       </Company>
-      <UpperPart></UpperPart>
       <Footer active={bundlePackage.active}>
         {bundlePackage.active ? <p>Active</p> : <p>Not active</p>}
       </Footer>

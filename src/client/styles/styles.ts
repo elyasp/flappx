@@ -48,3 +48,10 @@ export const TappxGradient = css`
     rgba(255, 102, 0, 1) 100%
   );
 `;
+
+export const AppContainer = styled.div`
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+  /* min-height: 100vw; */
+`;

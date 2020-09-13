@@ -33011,11 +33011,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const components_1 = __webpack_require__(/*! ./components */ "./src/client/components/index.ts");
+const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/styles/index.ts");
 exports.App = () => {
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement(components_1.Nav, null),
-        react_1.default.createElement(components_1.BundleManager, null),
-        react_1.default.createElement(components_1.FooterComponent, null)));
+    return (react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(styles_1.AppContainer, null,
+            react_1.default.createElement(components_1.Nav, null),
+            react_1.default.createElement(components_1.BundleManager, null),
+            react_1.default.createElement(components_1.FooterComponent, null))));
 };
 
 
@@ -33039,7 +33041,7 @@ const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules
 const services_1 = __webpack_require__(/*! ../../services */ "./src/client/services/index.ts");
 const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/bundleItem/styles.ts");
 exports.BundleItem = ({ bundlePackage }) => {
-    const toggleDelete = (e) => {
+    const handleDelete = (e) => {
         e.preventDefault();
         const bundleToDelete = { bundle: e.target.value };
         services_1.deleteBundle(bundleToDelete)
@@ -33050,21 +33052,19 @@ exports.BundleItem = ({ bundlePackage }) => {
             console.log("Could not add bundle", error);
         });
     };
-    const handleDelete = (e) => {
-        e.preventDefault();
-    };
     return (react_1.default.createElement(styles_1.Card, null,
         react_1.default.createElement(styles_1.Package, null,
             react_1.default.createElement(styles_1.PackageName, null,
                 react_1.default.createElement("h1", null, bundlePackage.name),
-                react_1.default.createElement("p", null, bundlePackage.bundle))),
+                react_1.default.createElement("p", null, bundlePackage.bundle)),
+            react_1.default.createElement(styles_1.CategoryLabel, null, bundlePackage.category)),
         react_1.default.createElement(styles_1.Company, null,
-            react_1.default.createElement(styles_1.CompanyName, null,
+            react_1.default.createElement("div", null,
                 react_1.default.createElement("small", null, "made by "),
                 bundlePackage.company),
-            react_1.default.createElement(styles_1.CompanyEmail, null, bundlePackage.email),
-            react_1.default.createElement(styles_1.DeleteButton, { value: bundlePackage.bundle, onClick: toggleDelete }, "Delete")),
-        react_1.default.createElement(styles_1.UpperPart, null),
+            react_1.default.createElement("div", null, bundlePackage.email),
+            react_1.default.createElement(styles_1.DeleteButton, { value: bundlePackage.bundle, onClick: handleDelete },
+                react_1.default.createElement("small", null, "DELETE"))),
         react_1.default.createElement(styles_1.Footer, { active: bundlePackage.active }, bundlePackage.active ? react_1.default.createElement("p", null, "Active") : react_1.default.createElement("p", null, "Not active"))));
 };
 
@@ -33101,14 +33101,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteButton = exports.Active = exports.Footer = exports.CompanyEmail = exports.CompanyName = exports.PackageName = exports.Company = exports.Package = exports.UpperPart = exports.Card = void 0;
+exports.CategoryLabel = exports.DeleteButton = exports.Footer = exports.PackageName = exports.Company = exports.Package = exports.Card = void 0;
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.Card = styled_components_1.default.div `
   height: fit-content;
   max-width: fit-content;
-  border-radius: 20px;
-  margin-bottom: 3em;
+  border-radius: 1em;
+  margin: 0 1em 2em;
+  border-radius: 1em;
   overflow: hidden;
   display: grid;
   grid-template: auto 1fr auto / auto 1fr auto;
@@ -33118,16 +33119,13 @@ exports.Card = styled_components_1.default.div `
       font-size: 2vw;
   `)}
 `;
-exports.UpperPart = styled_components_1.default.div `
-  /* min-height: 5em; */
-`;
 exports.Package = styled_components_1.default.div `
   grid-column: 1 / 2;
   ${styles_1.TappxGradient}
   color: #fff;
-  padding: 30px;
+  padding: 1.5em;
   width: 250px;
-
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33140,7 +33138,7 @@ exports.Package = styled_components_1.default.div `
 exports.Company = styled_components_1.default.div `
   background-color: #1f383f;
   color: white;
-  padding: 30px;
+  padding: 1em;
   grid-column: 2 / 3;
   position: relative;
   width: 150px;
@@ -33164,15 +33162,7 @@ exports.PackageName = styled_components_1.default.div `
   `)}
   }
 `;
-exports.CompanyName = styled_components_1.default.div ``;
-exports.CompanyEmail = styled_components_1.default.div ``;
 exports.Footer = styled_components_1.default.div `
-  p {
-    margin: 0.1em;
-    color: white;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
   background-color: ${({ active }) => (active ? "#33a349" : "#4a4a4a")};
   min-height: 1em;
   width: -webkit-fill-available;
@@ -33180,11 +33170,18 @@ exports.Footer = styled_components_1.default.div `
   display: flex;
   justify-content: center;
   align-items: center;
+
+  p {
+    margin: 0.1em;
+    color: white;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
 `;
-exports.Active = styled_components_1.default.div ``;
 exports.DeleteButton = styled_components_1.default.button `
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 0.8em;
+  font-weight: 700;
   position: absolute;
   bottom: -1em;
   right: 1em;
@@ -33195,6 +33192,19 @@ exports.DeleteButton = styled_components_1.default.button `
   cursor: pointer;
   ${styles_1.TappxGradient}
   ${styles_1.LayeredBoxShadow}
+`;
+exports.CategoryLabel = styled_components_1.default.div `
+  padding: 0 0.5em;
+  border: none;
+  border-radius: 1em;
+  background-color: #1f383f;
+  position: absolute;
+  color: rgba(250, 0, 67, 1);
+  bottom: 1em;
+
+  ${styles_1.media.md(`
+    right: 1em;
+  `)}
 `;
 
 
@@ -33293,12 +33303,13 @@ exports.NoBundles = exports.Searchbar = exports.BundleContainer = exports.AddBut
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.ManagerWrap = styled_components_1.default.div `
-  height: inherit;
+  min-height: calc(100vh - 5vh);
   padding-top: 1em;
   display: flex;
-  justify-content: space-evenly;
+  /* justify-content: space-evenly; */
   align-items: center;
   flex-direction: column;
+  overflow-y: auto;
 `;
 exports.AddButton = styled_components_1.default.button `
   color: white;
@@ -33312,16 +33323,16 @@ exports.AddButton = styled_components_1.default.button `
 exports.BundleContainer = styled_components_1.default.div `
   width: -webkit-fill-available;
   display: flex;
-  flex-flow: column wrap;
   align-items: center;
-  overflow-y: auto;
+  justify-content: center;
+  flex-flow: row wrap;
 `;
 exports.Searchbar = styled_components_1.default.input `
   outline: none;
   width: 35vw;
   font-size: 1em;
   height: 2em;
-  margin: 1em;
+  margin: 2em;
   padding: 0 1em;
   border: solid 2px rgb(250, 0, 67);
   border-radius: 50px;
@@ -33334,10 +33345,6 @@ exports.NoBundles = styled_components_1.default.div `
   margin-top: 5em;
   display: grid;
   place-items: center;
-
-  ${styles_1.media.lg(`
-  font-size: 5vw;
-  `)}
 `;
 
 
@@ -33407,13 +33414,14 @@ exports.Footer = styled_components_1.default.footer `
   display: flex;
   align-items: center;
   justify-content: center;
-  position: fixed;
+  /* position: absolute; */
   bottom: 0;
   left: 0;
   width: 100%;
   height: 5vh;
   color: white;
   background-color: #141a1d;
+  font-size: 1em;
 
   a {
     text-decoration-line: none;
@@ -33602,7 +33610,7 @@ exports.ModalContainer = styled_components_1.default.div `
 `;
 exports.ModalContent = styled_components_1.default.div `
   position: relative;
-  margin: 15% auto;
+  margin: 11% auto;
   background-color: #ef003d;
   border-radius: 10px;
   width: 40vw;
@@ -34004,9 +34012,28 @@ __exportStar(__webpack_require__(/*! ./styles */ "./src/client/styles/styles.ts"
 
 "use strict";
 
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TappxGradient = exports.LayeredBoxShadow = exports.media = exports.breakpoints = void 0;
-const styled_components_1 = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+exports.AppContainer = exports.TappxGradient = exports.LayeredBoxShadow = exports.media = exports.breakpoints = void 0;
+const styled_components_1 = __importStar(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 exports.breakpoints = {
     xs: 320,
     sm: 480,
@@ -34034,6 +34061,12 @@ exports.TappxGradient = styled_components_1.css `
     rgba(250, 0, 67, 1) 53%,
     rgba(255, 102, 0, 1) 100%
   );
+`;
+exports.AppContainer = styled_components_1.default.div `
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+  /* min-height: 100vw; */
 `;
 
 

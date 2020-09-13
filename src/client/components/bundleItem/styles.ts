@@ -8,8 +8,9 @@ interface IActiveFooterProps {
 export const Card = styled.div`
   height: fit-content;
   max-width: fit-content;
-  border-radius: 20px;
-  margin-bottom: 3em;
+  border-radius: 1em;
+  margin: 0 1em 2em;
+  border-radius: 1em;
   overflow: hidden;
   display: grid;
   grid-template: auto 1fr auto / auto 1fr auto;
@@ -20,17 +21,13 @@ export const Card = styled.div`
   `)}
 `;
 
-export const UpperPart = styled.div`
-  /* min-height: 5em; */
-`;
-
 export const Package = styled.div`
   grid-column: 1 / 2;
   ${TappxGradient}
   color: #fff;
-  padding: 30px;
+  padding: 1.5em;
   width: 250px;
-
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,7 +41,7 @@ export const Package = styled.div`
 export const Company = styled.div`
   background-color: #1f383f;
   color: white;
-  padding: 30px;
+  padding: 1em;
   grid-column: 2 / 3;
   position: relative;
   width: 150px;
@@ -70,16 +67,7 @@ export const PackageName = styled.div`
   }
 `;
 
-export const CompanyName = styled.div``;
-export const CompanyEmail = styled.div``;
-
 export const Footer = styled.div<IActiveFooterProps>`
-  p {
-    margin: 0.1em;
-    color: white;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-  }
   background-color: ${({ active }) => (active ? "#33a349" : "#4a4a4a")};
   min-height: 1em;
   width: -webkit-fill-available;
@@ -87,12 +75,19 @@ export const Footer = styled.div<IActiveFooterProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  p {
+    margin: 0.1em;
+    color: white;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
 `;
 
-export const Active = styled.div``;
 export const DeleteButton = styled.button`
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 0.8em;
+  font-weight: 700;
   position: absolute;
   bottom: -1em;
   right: 1em;
@@ -103,4 +98,18 @@ export const DeleteButton = styled.button`
   cursor: pointer;
   ${TappxGradient}
   ${LayeredBoxShadow}
+`;
+
+export const CategoryLabel = styled.div`
+  padding: 0 0.5em;
+  border: none;
+  border-radius: 1em;
+  background-color: #1f383f;
+  position: absolute;
+  color: rgba(250, 0, 67, 1);
+  bottom: 1em;
+
+  ${media.md(`
+    right: 1em;
+  `)}
 `;

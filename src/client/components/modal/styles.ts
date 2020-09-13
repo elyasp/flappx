@@ -17,7 +17,7 @@ export const ModalContainer = styled.div`
 
 export const ModalContent = styled.div`
   position: relative;
-  margin: 15% auto;
+  margin: 11% auto;
   background-color: #ef003d;
   border-radius: 10px;
   width: 40vw;
