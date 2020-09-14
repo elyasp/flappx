@@ -1,7 +1,8 @@
-Fullstack app that saves android app bundles in MySQL
-Using react, node, styled-components, typescript, mysql, and an express router
+### Fullstack app that saves android app bundles in MySQL
 
-To Run the App locally,
+##### Using react, node, styled-components, typescript, mysql, and an express router
+
+#### To Run the App locally,
 
 1. CD to root of app
 2. npm install
@@ -10,6 +11,5 @@ To Run the App locally,
 
 TODO:
 
-6. Configure n seed ClearDB on Heroku
-7. Update readme with findings, instructions, ideas, and opinion
-8. Fix Searchbar
+7. Fix Searchbar
+8. Optional: To remove the console TypeErrors I'd have to create an interface for each value, also there where typechecking is not necessary (library tools)
