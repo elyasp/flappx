@@ -1,8 +1,8 @@
-import { Connection } from "./index";
+import { connection } from "./index";
 
 export const all = async () => {
   return new Promise((resolve, reject) => {
-    Connection.query("SELECT * FROM package", (error, result) => {
+    connection.query("SELECT * FROM package", (error, result) => {
       if (error) {
         return reject(error);
       }
@@ -20,7 +20,7 @@ export const create = async (
   category: string
 ) => {
   return new Promise((resolve, reject) => {
-    Connection.query(
+    connection.query(
       `INSERT INTO package VALUES ("${name}", "${bundle}", "${company}", "${email}", ${active}, "${category}");`,
       (error, result) => {
         if (error) {
@@ -34,7 +34,7 @@ export const create = async (
 
 export const remove = async (bundle: string) => {
   return new Promise((resolve, reject) => {
-    Connection.query(
+    connection.query(
       `DELETE FROM package WHERE bundle="${bundle}";`,
       (error, result) => {
         if (error) {
