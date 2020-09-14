@@ -5,9 +5,14 @@ import Bundles from "./bundles";
 export const Connection = mysql.createConnection(config.mysql);
 
 function handleError() {
-  var connection = mysql.createConnection(config.mysql);
+  Connection.connect(function (err) {
+    if (err) {
+      console.log("Database connection error:", err);
+      setTimeout(handleError, 2500);
+    }
+  });
 
-  connection.on("error", function (error) {
+  Connection.on("error", function (error) {
     console.log("DATABASE DISCONNECTED", error);
     if (error.code === "PROTOCOL_CONNECTION_LOST") {
       handleError();
@@ -15,12 +20,6 @@ function handleError() {
       console.log(error.code);
       handleError();
     }
-    connection.connect((error) => {
-      if (error) {
-        console.log(error);
-      }
-      console.log("SQL Connection succeeded...");
-    });
   });
 }
 
