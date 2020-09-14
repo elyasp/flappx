@@ -15,7 +15,8 @@
 4. npm run dev
 5. Go to localhost:3000 in browser
 
-TODO:
+TODO if i had more time:
 
 7. Fix Searchbar
-8. Optional: To remove the console TypeErrors I'd have to create an interface for each value, also there where typechecking is not necessary (library tools)
+8. Re-create error handling of sql connection so server does not disconnect during runtime.
+9. Remove typescript errors by extending tsconfig and typeguarding each argument, even where it's not needed.
