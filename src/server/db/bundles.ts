@@ -46,10 +46,6 @@ export const remove = async (bundle: string) => {
   });
 };
 
-setInterval(function () {
-  Connection.query("SELECT 1");
-}, 5000);
-
 export default {
   all,
   create,

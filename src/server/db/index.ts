@@ -2,14 +2,7 @@ import * as mysql from "mysql";
 import config from "../config";
 import Bundles from "./bundles";
 
-export const Connection = mysql.createPool(config.mysql);
-
-// Connection.connect(function (error) {
-//   if (error) {
-//     console.log("DB Connection Error>>>", error);
-//     setTimeout(handleError, 3000);
-//   }
-// });
+export const Connection = mysql.createConnection(config.mysql);
 
 function handleError() {
   var connection = mysql.createConnection(config.mysql);
@@ -19,8 +12,15 @@ function handleError() {
     if (error.code === "PROTOCOL_CONNECTION_LOST") {
       handleError();
     } else {
-      throw error;
+      console.log(error.code);
+      handleError();
     }
+    connection.connect((error) => {
+      if (error) {
+        console.log(error);
+      }
+      console.log("SQL Connection succeeded...");
+    });
   });
 }
 
