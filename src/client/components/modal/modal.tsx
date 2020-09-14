@@ -8,6 +8,7 @@ import {
   SubmitButton,
   CancelButton,
 } from "./styles";
+import { InputError } from "./inputError";
 
 interface IBundle {
   name: string;
@@ -24,20 +25,18 @@ interface ToggleProps {
 
 export const Modal = (props: ToggleProps) => {
   const [inputBundle, setInputBundle] = useState<IBundle>();
+  const [validInput, setValidInput] = useState(true);
   const { closeModal } = props;
-
-  console.log("MODAL STATE", inputBundle);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     createBundle(inputBundle)
-      .then((res) => {
-        console.log("CREATED", res);
+      .then(() => {
         window.location.reload(true);
       })
       .catch((error) => {
-        console.log("Could not add bundle", error);
+        console.log("Bundle not added", error);
       });
   };
 
@@ -48,11 +47,10 @@ export const Modal = (props: ToggleProps) => {
     setInputBundle({ ...inputBundle, [e.target.name]: e.target.value });
   };
 
-  const validateInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    const re = /[a-zA-Z0-9._]+/i;
-    if (!re.test(e.key)) {
-      e.preventDefault();
-    }
+  const validateInput = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { bundle } = inputBundle || {};
+    const regex = /^[a-z]\w*(\.[a-z]\w*)+$/i;
+    regex.test(bundle) ? setValidInput(true) : setValidInput(false);
   };
 
   return (
@@ -72,10 +70,10 @@ export const Modal = (props: ToggleProps) => {
                 type="text"
                 required
                 placeholder="e.g. com.example.app"
-                onKeyPress={validateInput}
+                onBlur={validateInput}
                 onChange={onChange}
               />
-              <small>only alphanumerics, dots, and underscores</small>
+              <InputError isHidden={validInput} />
             </div>
             <div>
               <span>

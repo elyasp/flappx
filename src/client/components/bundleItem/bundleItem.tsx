@@ -27,13 +27,13 @@ export const BundleItem: React.FC<IProps> = ({ bundlePackage }) => {
   const handleDelete = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault();
     const bundleToDelete = { bundle: e.target.value };
-
     deleteBundle(bundleToDelete)
       .then(() => {
         window.location.reload(true);
       })
       .catch((error) => {
-        console.log("Could not add bundle", error);
+        console.log("Connection Error", error);
+        throw new Error();
       });
   };
 

@@ -18,13 +18,11 @@ export interface IBundle {
   category: string;
 }
 
-export interface IAppProps {}
-
 export const BundleManager = () => {
-  const [bundles, setBundles] = useState<IBundle[]>();
+  const [bundles, setBundles] = useState<IBundle[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log(bundles);
+  // const [search, setSearch] = useState("");
+  // const [searchedBundles, setSearchedBundles] = useState<IBundle[]>([]);
 
   useEffect(() => {
     getBundles()
@@ -34,17 +32,32 @@ export const BundleManager = () => {
       });
   }, []);
 
+  // BUG on implementing search function, filter not working properly
+  // - correctly receives json object
+  // - properly iterates value in Chrome devtools
+  // - returns empty array
+
+  // useEffect(() => {
+  //   setSearchedBundles(
+  //     bundles &&
+  //       bundles.filter((item) => {
+  //         item.name.toLowerCase().includes(search.toLowerCase());
+  //       })
+  //   );
+  // }, [bundles, search]);
+  console.log(">>>", bundles);
   return (
     <>
       {isOpen && <Modal closeModal={() => setIsOpen(false)}></Modal>}
-      {bundles ? (
+      {bundles.length !== 0 ? (
         <ManagerWrap>
           <AddButton onClick={() => setIsOpen(true)}>New Bundle</AddButton>
-          <Searchbar
+          {/* <Searchbar
             type="text"
             placeholder="SEARCH"
-            // onChange={(e) => setSearch(e.target.value)}
-          />
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          /> */}
           <BundleContainer>
             {bundles.map((item) => {
               return <BundleItem key={item.bundle} bundlePackage={item} />;

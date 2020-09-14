@@ -6,6 +6,7 @@ interface BreakPoints {
   md: number;
   lg: number;
   xl: number;
+  xxl: number;
 }
 
 export const breakpoints: BreakPoints = {
@@ -14,6 +15,7 @@ export const breakpoints: BreakPoints = {
   md: 600,
   lg: 801,
   xl: 1025,
+  xxl: 1025,
 };
 
 type BreakpointKeys = keyof BreakPoints;
@@ -49,9 +51,4 @@ export const TappxGradient = css`
   );
 `;
 
-export const AppContainer = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between; */
-  /* min-height: 100vw; */
-`;
+export const AppContainer = styled.div``;

@@ -13,6 +13,7 @@ export const Footer = styled.footer`
   color: white;
   background-color: #141a1d;
   font-size: 1em;
+  border-top: solid 0.5em #fa0043;
 
   a {
     text-decoration-line: none;

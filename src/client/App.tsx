@@ -5,11 +5,9 @@ import { AppContainer } from "./styles";
 export const App: React.FC = () => {
   return (
     <>
-      <AppContainer>
-        <Nav />
-        <BundleManager />
-        <FooterComponent />
-      </AppContainer>
+      <Nav />
+      <BundleManager />
+      <FooterComponent />
     </>
   );
 };

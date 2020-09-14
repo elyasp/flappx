@@ -33,7 +33,7 @@ export const Package = styled.div`
   justify-content: center;
 
   ${media.md(`
-      width: 30vw;
+      width: 39vw;
       height: 38px;
   `)}
 `;
@@ -98,6 +98,12 @@ export const DeleteButton = styled.button`
   cursor: pointer;
   ${TappxGradient}
   ${LayeredBoxShadow}
+  transition: 300ms;
+
+  &:hover {
+    transform: scale(1.2, 1.2);
+    transition: 300ms;
+  }
 `;
 
 export const CategoryLabel = styled.div`

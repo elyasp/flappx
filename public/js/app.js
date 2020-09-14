@@ -2684,7 +2684,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(true);
 ___CSS_LOADER_EXPORT___.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap);"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, "* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  background-color: #545454;\r\n}\r\n", "",{"version":3,"sources":["webpack://src/client/index.css"],"names":[],"mappings":"AAEA;EACE,4BAA4B;AAC9B;;AAEA;EACE,SAAS;EACT,yBAAyB;AAC3B","sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap\");\r\n\r\n* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  background-color: #545454;\r\n}\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.i, "* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  background-color: #e8e8e8;\r\n}\r\n", "",{"version":3,"sources":["webpack://src/client/index.css"],"names":[],"mappings":"AAEA;EACE,4BAA4B;AAC9B;;AAEA;EACE,SAAS;EACT,yBAAyB;AAC3B","sourcesContent":["@import url(\"https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,200;0,300;0,600;0,700;1,200&display=swap\");\r\n\r\n* {\r\n  font-family: \"Titillium Web\";\r\n}\r\n\r\nbody {\r\n  margin: 0;\r\n  background-color: #e8e8e8;\r\n}\r\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ __webpack_exports__["default"] = (___CSS_LOADER_EXPORT___);
 
@@ -33011,13 +33011,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 const components_1 = __webpack_require__(/*! ./components */ "./src/client/components/index.ts");
-const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/styles/index.ts");
 exports.App = () => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(styles_1.AppContainer, null,
-            react_1.default.createElement(components_1.Nav, null),
-            react_1.default.createElement(components_1.BundleManager, null),
-            react_1.default.createElement(components_1.FooterComponent, null))));
+        react_1.default.createElement(components_1.Nav, null),
+        react_1.default.createElement(components_1.BundleManager, null),
+        react_1.default.createElement(components_1.FooterComponent, null)));
 };
 
 
@@ -33049,7 +33047,8 @@ exports.BundleItem = ({ bundlePackage }) => {
             window.location.reload(true);
         })
             .catch((error) => {
-            console.log("Could not add bundle", error);
+            console.log("Connection Error", error);
+            throw new Error();
         });
     };
     return (react_1.default.createElement(styles_1.Card, null,
@@ -33131,7 +33130,7 @@ exports.Package = styled_components_1.default.div `
   justify-content: center;
 
   ${styles_1.media.md(`
-      width: 30vw;
+      width: 39vw;
       height: 38px;
   `)}
 `;
@@ -33192,6 +33191,12 @@ exports.DeleteButton = styled_components_1.default.button `
   cursor: pointer;
   ${styles_1.TappxGradient}
   ${styles_1.LayeredBoxShadow}
+  transition: 300ms;
+
+  &:hover {
+    transform: scale(1.2, 1.2);
+    transition: 300ms;
+  }
 `;
 exports.CategoryLabel = styled_components_1.default.div `
   padding: 0 0.5em;
@@ -33245,9 +33250,10 @@ const components_1 = __webpack_require__(/*! ../../components */ "./src/client/c
 const services_1 = __webpack_require__(/*! ../../services */ "./src/client/services/index.ts");
 const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/bundleManager/styles.ts");
 exports.BundleManager = () => {
-    const [bundles, setBundles] = react_1.useState();
+    const [bundles, setBundles] = react_1.useState([]);
     const [isOpen, setIsOpen] = react_1.useState(false);
-    console.log(bundles);
+    // const [search, setSearch] = useState("");
+    // const [searchedBundles, setSearchedBundles] = useState<IBundle[]>([]);
     react_1.useEffect(() => {
         services_1.getBundles()
             .then(setBundles)
@@ -33255,11 +33261,23 @@ exports.BundleManager = () => {
             console.log(error);
         });
     }, []);
+    // BUG on implementing search function, filter not working properly
+    // - correctly receives json object
+    // - properly iterates value in Chrome devtools
+    // - returns empty array
+    // useEffect(() => {
+    //   setSearchedBundles(
+    //     bundles &&
+    //       bundles.filter((item) => {
+    //         item.name.toLowerCase().includes(search.toLowerCase());
+    //       })
+    //   );
+    // }, [bundles, search]);
+    console.log(">>>", bundles);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         isOpen && react_1.default.createElement(components_1.Modal, { closeModal: () => setIsOpen(false) }),
-        bundles ? (react_1.default.createElement(styles_1.ManagerWrap, null,
+        bundles.length !== 0 ? (react_1.default.createElement(styles_1.ManagerWrap, null,
             react_1.default.createElement(styles_1.AddButton, { onClick: () => setIsOpen(true) }, "New Bundle"),
-            react_1.default.createElement(styles_1.Searchbar, { type: "text", placeholder: "SEARCH" }),
             react_1.default.createElement(styles_1.BundleContainer, null, bundles.map((item) => {
                 return react_1.default.createElement(components_1.BundleItem, { key: item.bundle, bundlePackage: item });
             })))) : (react_1.default.createElement(styles_1.NoBundles, null,
@@ -33306,19 +33324,30 @@ exports.ManagerWrap = styled_components_1.default.div `
   min-height: calc(100vh - 5vh);
   padding-top: 1em;
   display: flex;
-  /* justify-content: space-evenly; */
+  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   overflow-y: auto;
 `;
 exports.AddButton = styled_components_1.default.button `
+  min-width: 129px;
+  background-color: #1e282c;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 16px;
   color: white;
   outline: none;
   border: none;
   padding: 0.5em;
+  margin: 1em 0 2em;
   cursor: pointer;
-  ${styles_1.TappxGradient}
   ${styles_1.LayeredBoxShadow}
+  transition: 300ms;
+
+  &:hover {
+    transform: scale(1.2, 1.2);
+    transition: 300ms;
+  }
 `;
 exports.BundleContainer = styled_components_1.default.div `
   width: -webkit-fill-available;
@@ -33342,6 +33371,8 @@ exports.Searchbar = styled_components_1.default.input `
   `)}
 `;
 exports.NoBundles = styled_components_1.default.div `
+  min-height: calc(100vh - 31.5vh);
+  color: black;
   margin-top: 5em;
   display: grid;
   place-items: center;
@@ -33422,6 +33453,7 @@ exports.Footer = styled_components_1.default.footer `
   color: white;
   background-color: #141a1d;
   font-size: 1em;
+  border-top: solid 0.5em #fa0043;
 
   a {
     text-decoration-line: none;
@@ -33475,6 +33507,38 @@ Object.defineProperty(exports, "Modal", { enumerable: true, get: function () { r
 
 /***/ }),
 
+/***/ "./src/client/components/modal/inputError.tsx":
+/*!****************************************************!*\
+  !*** ./src/client/components/modal/inputError.tsx ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.InputError = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/modal/styles.ts");
+exports.InputError = (props) => {
+    if (props.isHidden) {
+        return null;
+    }
+    return (react_1.default.createElement(styles_1.ErrorMessage, null,
+        react_1.default.createElement("h6", null, "That is not a valid android package name"),
+        react_1.default.createElement("ul", null,
+            react_1.default.createElement("li", null, "Names must consist of at least two segments"),
+            react_1.default.createElement("li", null, "Separated by dots"),
+            react_1.default.createElement("li", null, "Segments must start with a letter"),
+            react_1.default.createElement("li", null, "Characters must be either alphanumeric or underscores"))));
+};
+
+
+/***/ }),
+
 /***/ "./src/client/components/modal/modal.tsx":
 /*!***********************************************!*\
   !*** ./src/client/components/modal/modal.tsx ***!
@@ -33512,19 +33576,19 @@ const react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/re
 const services_1 = __webpack_require__(/*! ../../services */ "./src/client/services/index.ts");
 const react_reveal_1 = __importDefault(__webpack_require__(/*! react-reveal */ "./node_modules/react-reveal/index.js"));
 const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/modal/styles.ts");
+const inputError_1 = __webpack_require__(/*! ./inputError */ "./src/client/components/modal/inputError.tsx");
 exports.Modal = (props) => {
     const [inputBundle, setInputBundle] = react_1.useState();
+    const [validInput, setValidInput] = react_1.useState(true);
     const { closeModal } = props;
-    console.log("MODAL STATE", inputBundle);
     const handleSubmit = (e) => {
         e.preventDefault();
         services_1.createBundle(inputBundle)
-            .then((res) => {
-            console.log("CREATED", res);
+            .then(() => {
             window.location.reload(true);
         })
             .catch((error) => {
-            console.log("Could not add bundle", error);
+            console.log("Bundle not added", error);
         });
     };
     const onChange = (e) => {
@@ -33532,10 +33596,9 @@ exports.Modal = (props) => {
         setInputBundle(Object.assign(Object.assign({}, inputBundle), { [e.target.name]: e.target.value }));
     };
     const validateInput = (e) => {
-        const re = /[a-zA-Z0-9._]+/i;
-        if (!re.test(e.key)) {
-            e.preventDefault();
-        }
+        const { bundle } = inputBundle || {};
+        const regex = /^[a-z]\w*(\.[a-z]\w*)+$/i;
+        regex.test(bundle) ? setValidInput(true) : setValidInput(false);
     };
     return (react_1.default.createElement(styles_1.ModalContainer, null,
         react_1.default.createElement(react_reveal_1.default, null,
@@ -33546,8 +33609,8 @@ exports.Modal = (props) => {
                         react_1.default.createElement("input", { name: "name", type: "text", required: true, onChange: onChange })),
                     react_1.default.createElement("div", null,
                         react_1.default.createElement("label", { htmlFor: "bundle" }, "Package Name"),
-                        react_1.default.createElement("input", { name: "bundle", type: "text", required: true, placeholder: "e.g. com.example.app", onKeyPress: validateInput, onChange: onChange }),
-                        react_1.default.createElement("small", null, "only alphanumerics, dots, and underscores")),
+                        react_1.default.createElement("input", { name: "bundle", type: "text", required: true, placeholder: "e.g. com.example.app", onBlur: validateInput, onChange: onChange }),
+                        react_1.default.createElement(inputError_1.InputError, { isHidden: validInput })),
                     react_1.default.createElement("div", null,
                         react_1.default.createElement("span", null,
                             "Is the bundle active?",
@@ -33592,7 +33655,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CancelButton = exports.SubmitButton = exports.Form = exports.ModalContent = exports.ModalContainer = void 0;
+exports.ErrorMessage = exports.CancelButton = exports.SubmitButton = exports.Form = exports.ModalContent = exports.ModalContainer = void 0;
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.ModalContainer = styled_components_1.default.div `
@@ -33624,7 +33687,7 @@ exports.Form = styled_components_1.default.form `
   margin: 0;
   border-radius: 10px;
   color: white;
-  padding: 2em 0.5em;
+  padding: 1em 0.7em;
   background-color: #1f383f;
 
   div {
@@ -33648,27 +33711,58 @@ exports.Form = styled_components_1.default.form `
   span {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
   }
 `;
 exports.SubmitButton = styled_components_1.default.button `
   border: none;
-  padding: 0.5em;
+  padding: 0.5em 1em;
   background-color: #ef003d;
   color: white;
   font-weight: 600;
   font-size: 1.1em;
   cursor: pointer;
+  margin-top: 1em;
+  transition: 300ms;
+  border-radius: 0.3em;
+
+  &:hover {
+    background-color: #a3002c;
+    transition: 300ms;
+  }
 `;
 exports.CancelButton = styled_components_1.default.button `
   border: none;
   cursor: pointer;
-  padding: 0.5em;
-  background-color: #0a0a0a;
+  padding: 0.5em 1em;
+  background-color: #1f1f1f;
   color: white;
   font-weight: 600;
   font-size: 1.1em;
   margin-left: 1em;
+  margin-top: 1em;
+  transition: 300ms;
+  border-radius: 0.3em;
+
+  &:hover {
+    background-color: #000000;
+    transition: 300ms;
+  }
+`;
+exports.ErrorMessage = styled_components_1.default.div `
+  color: white;
+
+  ul {
+    padding-left: 1em;
+  }
+
+  h6 {
+    margin: 0;
+    color: #ff3636;
+  }
+
+  li {
+    font-size: 0.7em;
+  }
 `;
 
 
@@ -33735,22 +33829,29 @@ exports.Header = void 0;
 const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
 const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
 exports.Header = styled_components_1.default.nav `
-  ${styles_1.TappxGradient}
-  padding: 1em;
+  background-color: #333333;
+  padding: 1em 5vw;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: column;
+  border-bottom: solid 1em #fa0043;
+
+  ${styles_1.media.xxl(`
+    flex-direction: column; 
+  `)}
 
   div {
-    min-width: 30vw;
     margin-top: 1em;
+    width: fit-content;
+
+    svg {
+      height: 5em;
+    }
   }
 
   h3 {
     color: white;
     font-weight: 400;
-    font-style: italic;
     font-size: 2em;
 
     ${styles_1.media.md(`
@@ -33777,47 +33878,36 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 
 
-var _ref = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("switch", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("g", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("image", {
-  width: 1920,
-  height: 500,
-  xlinkHref: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAH0CAYAAADcwTArAAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAADqNJREFUeNrswQENAAAAwqD3T20O N6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAeDEBBgCdWgAB21Ru6wAAAABJRU5ErkJggg=="
-}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
-  fill: "#FFF",
-  d: "M0 337.54c12.84-36.66 46.95-47.75 75.87-42.14 20.76 4.03 35.8 14.8 42.57 36.57 7.17 23.03-9.55 46.49-24.98 54.79-17.98 9.68-36.91 12.44-56.84 6.29-17.32-5.35-29.1-16.29-35.22-33.37-.23-.63-.93-1.09-1.41-1.63.01-6.84.01-13.68.01-20.51z"
-}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("image", {
-  width: 119,
-  height: 2,
-  xlinkHref: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHcAAAACCAYAAABi1kP4AAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABNJREFUeNpiYBgFo2AUDD0AEGAA A7oAAd1opyYAAAAASUVORK5CYII=",
-  transform: "translate(310)"
-}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
-  fill: "#FFF",
-  d: "M1299.31 362.27c-6.03 23.01-12.02 45.9-18.25 69.68h38.62c-3.58 13.57-7.09 26.24-10.25 39-4.27 17.24-4.15 17.27-21.83 17.27H1111.15c5.06-19.18 9.87-37.39 14.79-56.05h14.94c16.01 0 23.84-6.41 27.53-21.71 6.55-27.13 13.35-54.21 20.13-81.29 4.23-16.91 8.62-33.79 12.92-50.68 5.15-20.18 10.28-40.37 15.43-60.56 4.51-17.64 9.18-35.24 13.52-52.92 3.14-12.78-1.91-18.97-15.08-19.06-4.69-.03-9.39 0-15.56 0 2.87-10.19 5.53-19.47 8.09-28.77.97-3.54 2.42-7.12 2.47-10.7.16-12.66 7.23-17.62 18.81-20.17 25.54-5.63 51.24-8.85 77.3-6.48 28.01 2.55 46.82 15.7 49.35 48.05 2.54-1.77 4.83-2.97 6.64-4.67 33.52-31.55 72.48-49.37 119.26-45.78 30.45 2.34 55.34 14.65 72.2 41.82 13.29 21.44 15.69 44.88 14.21 68.62-1.38 22.14-4.32 44.5-9.77 65.96-5.46 21.53-15.69 41.83-28.75 59.97-17.67 24.56-39.7 44.6-67.73 57.08-29.64 13.2-60.85 17.37-92.98 14.76-23.74-1.93-46.61-6.92-65.94-22.24-.92-.72-2.37-.75-3.62-1.13zm11.18-44.02c19.03 8.29 38.79 10.2 59.12 7.49 20.02-2.67 36.23-12.71 49.66-27.24 13.9-15.03 21.98-33.7 26.28-53.08 3.81-17.19 4.35-35.34 4.41-53.07.06-18.96-15.49-35.06-34.77-38.41-23.38-4.07-43.84 3.34-63.52 14.6-1.48.85-3.08 2.31-3.62 3.84-2.3 6.54-4.47 13.16-6.24 19.86-4.46 16.83-8.78 33.69-12.96 50.59-6.13 24.75-12.08 49.56-18.36 75.42zM716.93 487.76c5.13-19.25 9.94-37.27 14.82-55.58H747c15.98 0 23.5-6.38 27.25-22.02 6.56-27.4 13.42-54.73 20.26-82.06 4.29-17.15 8.78-34.25 13.16-51.37 5.04-19.67 10.04-39.36 15.1-59.02 4.15-16.12 8.37-32.22 12.54-48.33.33-1.27.32-2.67.86-3.82 4.57-9.72-.51-18.88-11.12-19.49-5.99-.34-12.02-.06-19.95-.06 2.44-7.2 4.88-13.23 6.52-19.47 2.41-9.12 4.74-18.32 6.17-27.63.93-6.09 3.53-8.64 9.44-10.27 28.87-7.98 58.1-11.43 87.96-8.41 24.27 2.46 44.83 16.97 45.83 44.72.03.75.46 1.48 1.01 3.13 7.18-5.97 13.89-11.91 20.97-17.38 36.75-28.36 77.72-40.72 123.7-30.08 22.01 5.09 39.45 17.49 52.11 37.17 15.41 23.97 16.64 50.38 14.95 77.03-1.2 19-4.32 38.13-8.99 56.59-5.62 22.17-15.57 43.15-28.9 61.66-40.18 55.79-95.79 78.15-163.49 72.29-22.72-1.97-44.4-7.16-62.99-21.43-1.11-.85-2.75-1.01-4.32-1.55-6.11 23.34-12.09 46.18-18.25 69.72h38.52c-4.94 18.82-9.71 37.01-14.6 55.67-64.1-.01-128.28-.01-193.81-.01zm199.05-168.59c9.3 2.27 18.25 5.28 27.45 6.56 25.52 3.54 49.57-.2 70.45-16.73 18.62-14.74 28.94-35.02 36.09-56.81 6.26-19.09 7.35-39.13 6.11-59.19-1.29-20.88-15.41-35.56-35.98-39.2-16.42-2.91-31.43 1.5-46.86 6.34-16.11 5.06-22.21 16.58-25.63 31.46-3.96 17.22-8.71 34.25-12.96 51.4-6.15 24.77-12.17 49.58-18.67 76.17z"
-}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
-  fill: "#FFF",
-  d: "M473.52 173.75c5.98-23.19 12.05-45.01 17.07-67.08 1.84-8.08 4.87-11.84 13.4-14.08 59.91-15.71 120.4-19.65 181.63-10.5 19.81 2.96 38.82 9.33 55.05 21.29 14.08 10.38 22.45 24.61 25.63 42.46 2.47 13.91.19 26.94-2.86 40.01-7.13 30.49-14.81 60.86-22.43 91.24-3.28 13.07-7.15 26-10.38 39.08-2.43 9.84 2.93 16.47 12.94 16.62 4.7.07 9.4.01 15.14.01-3.69 13.89-7.74 26.97-10.49 40.32-1.6 7.75-4.76 11.97-12.54 14.64-26.59 9.13-53.65 12.57-81.28 7.49-17.94-3.3-32.93-11.71-39.53-30.46-.74-2.09-2.33-3.87-3.75-6.15-18.16 17.83-39.6 29.56-64.43 34.39-31.11 6.05-61.66 5.06-90.04-10.99-6.23-3.52-12.3-8.29-16.73-13.86-20.41-25.66-22.61-55.28-12.28-84.64 14.1-40.09 47.09-59.39 86.38-68.75 40.94-9.75 82.15-8.77 125.27-.06 2.4-11.66 5.81-23.39 7.03-35.34 1.45-14.26-3.83-22.03-18.64-26.04-33.86-9.18-66.4-5.18-95.36 16.73-2.36 1.79-5.53 3.47-8.36 3.53-16.24.31-32.5.14-50.44.14zm93.19 163.47c7.71-1.39 13.95-1.59 19.46-3.71 9.47-3.63 20.78-7.08 24.5-16.98 5.92-15.73 9.23-32.46 13.25-48.87.37-1.51-1.9-5.18-3.32-5.4-28.34-4.38-56.22-7.98-78.1 17.98-11.91 14.13-10.69 41.77 4.86 51 6.02 3.57 13.7 4.32 19.35 5.98zM1539.09 392.74c4.7-19.38 9.08-37.85 13.79-56.25.43-1.69 2.69-3.55 4.49-4.16 19.58-6.58 37.24-16.47 52.22-30.7 14.27-13.55 28.12-27.56 42.14-41.38.56-.55.95-1.27 1.51-1.81 14.01-13.64 14.19-17.51 1.58-32.66-.81-.97-1.53-2.05-2.13-3.16-6.68-12.33-13.27-24.71-20.02-37-5.5-10.01-11.04-20-16.82-29.84-3.46-5.9-8.55-9.69-15.74-9.77-5.65-.06-11.31-.01-16.36-.01 3.81-17.08 7.62-33.25 10.91-49.52.84-4.18 2.64-5.84 6.51-7.39 25.55-10.27 51.93-12.05 78.84-8.13 16.47 2.4 29.57 10.97 37.7 25.3 10.72 18.89 20.18 38.49 30.21 57.77 2.57 4.94 5.25 9.84 7.92 14.84 10.16-13.05 19.19-26.03 29.65-37.73 15.92-17.8 32.64-34.9 49.45-51.86 4.51-4.55 10.45-6.91 17.64-6.7 18.9.54 37.82.18 56.73.18h9.45c-4.44 16.71-10.08 32.01-12.2 47.77-1.75 12.97-8.81 16.96-19.38 21.32-22.71 9.36-40.94 25.6-58.18 42.77-11.4 11.34-22.49 22.99-33.5 34.72-1.11 1.18-1.56 4.33-.79 5.7 5.56 9.87 11.75 19.38 17.29 29.26 7.63 13.62 14.77 27.51 22.31 41.17 3.62 6.55 6.77 13.73 11.83 19 3.93 4.09 10.26 6.49 15.96 8.09 4.59 1.29 9.83.26 16.1.26-4.61 16.63-8.81 32.43-13.49 48.08-.78 2.6-3.21 5.71-5.63 6.67-31.13 12.4-62.65 14.52-94.04 1.32-6.01-2.53-11.75-7.24-15.91-12.33-6.85-8.39-12.83-17.61-18.25-27.02-9.68-16.8-18.66-34-28.34-51.77-3.06 3.44-6.13 6.58-8.83 10-11.56 14.69-22.22 30.17-34.71 44.01-12.45 13.8-26.65 26.03-40.23 38.79-1.35 1.26-3.68 2.07-5.56 2.08-24.66.14-49.33.09-74.12.09zM310.37 1.36c38.94.07 77.88.15 116.83.22-5.98 24.29-11.97 48.58-17.92 72.88-.56 2.27-.93 4.58-1.6 7.94h57.54c-5.69 21.82-11.04 42.33-16.58 63.56h-43.03c-15.81 0-15.88-.02-19.65 15.72-3.05 12.75-5.77 25.58-8.88 38.32-5.24 21.51-10.6 42.99-16.05 64.45-2.68 10.54-5.71 21-8.54 31.51-.41 1.51-.69 3.08-.86 4.64-2.17 19.01 4.43 28.14 23.43 30.94 9.28 1.36 18.77 1.28 28.2 1.85-2.64 10.84-5.31 21.77-7.95 32.71-1.05 4.33-2.64 8.65-2.88 13.04-.51 9.06-5.94 12.08-13.85 13.65-35.23 6.98-70.41 8.59-104.86-3.16-19.2-6.54-33.56-18.64-40.46-39.25-4.5-13.45-5.58-26.75-2.72-39.89 4.63-21.27 11.29-42.09 16.74-63.2 3.21-12.44 5.53-25.1 8.63-37.57 4.64-18.69 9.63-37.3 14.42-55.96.57-2.21.81-4.51 1.38-7.76h-35.15c3.69-12.92 7.13-24.51 10.28-36.18 1.64-6.07 3.16-12.22 4.03-18.43.91-6.54 3.49-9.37 10.62-8.8 9.1.73 18.29.18 27.2.18 7.35-27.68 14.51-54.55 21.68-81.41zM164.74 174.13c-2.3 21.19-12.28 36.27-29.98 45.54-18.45 9.66-38.2 11.54-57.79 4.03-25.46-9.77-41.47-34.48-30.23-62.08 8-19.65 24.71-30.97 45.7-35.12 20.96-4.15 40.33-.18 56.5 13.92 10.14 8.84 13.82 21.54 15.8 33.71z"
-}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("image", {
-  width: 140,
-  height: 175,
-  xlinkHref: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACvCAYAAAAv+DamAAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHlJREFUeNrswTEBAAAAwqD1T20N D6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC5MgAEAf44AAXBIfe0AAAAA SUVORK5CYII=",
-  transform: "translate(1310 152)"
-}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("image", {
-  width: 142,
-  height: 175,
-  xlinkHref: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAI4AAACvCAYAAAArDeabAAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAHlJREFUeNrswQEBAAAAgiD/r25I QAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHBoAgwAhQYAAaPpc0EAAAAA SUVORK5CYII=",
-  transform: "translate(915 152)"
-}), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("image", {
-  width: 90,
-  height: 79,
-  xlinkHref: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABPCAYAAABrs9IqAAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADVJREFUeNrswTEBAAAAwqD1T20N D6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgxgQYAG9nAAEeBt0WAAAAAElFTkSuQmCC",
-  transform: "translate(534 259)"
-})));
+var _ref = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("style", null, ".tappx-logo_svg__st0{fill:#fe003c}");
+
+var _ref2 = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
+  className: "tappx-logo_svg__st0",
+  d: "M1.6 339.1c12.8-36.7 46.9-47.7 75.9-42.1 20.8 4 35.8 14.8 42.6 36.6 7.2 23-9.5 46.5-25 54.8-18 9.7-36.9 12.4-56.8 6.3-17.4-5.4-29.2-16.4-35.3-33.4-.2-.6-.9-1.1-1.4-1.6v-20.6z"
+});
+
+var _ref3 = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
+  d: "M311.9 2.9c-.2-.5-.1-.9.2-1.4h118.2l-1.6 1.6c-38.9 0-77.8-.1-116.8-.2z",
+  fill: "#fe7f9c"
+});
+
+var _ref4 = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
+  className: "tappx-logo_svg__st0",
+  d: "M1300.9 363.9c-6 23-12 45.9-18.3 69.7h38.6c-3.6 13.6-7.1 26.2-10.3 39-4.3 17.2-4.2 17.3-21.8 17.3h-176.5c5.1-19.2 9.9-37.4 14.8-56.1h14.9c16 0 23.8-6.4 27.5-21.7 6.6-27.1 13.4-54.2 20.1-81.3 4.2-16.9 8.6-33.8 12.9-50.7 5.1-20.2 10.3-40.4 15.4-60.6 4.5-17.6 9.2-35.2 13.5-52.9 3.1-12.8-1.9-19-15.1-19.1H1201c2.9-10.2 5.5-19.5 8.1-28.8 1-3.5 2.4-7.1 2.5-10.7.2-12.7 7.2-17.6 18.8-20.2 25.5-5.6 51.2-8.9 77.3-6.5 28 2.5 46.8 15.7 49.4 48 2.5-1.8 4.8-3 6.6-4.7 33.5-31.6 72.5-49.4 119.3-45.8 30.4 2.3 55.3 14.6 72.2 41.8 13.3 21.4 15.7 44.9 14.2 68.6-1.4 22.1-4.3 44.5-9.8 66-5.5 21.5-15.7 41.8-28.7 60-17.7 24.6-39.7 44.6-67.7 57.1-29.6 13.2-60.9 17.4-93 14.8-23.7-1.9-46.6-6.9-65.9-22.2-.7-.6-2.2-.7-3.4-1zm11.2-44.1c19 8.3 38.8 10.2 59.1 7.5 20-2.7 36.2-12.7 49.7-27.2 13.9-15 22-33.7 26.3-53.1 3.8-17.2 4.4-35.3 4.4-53.1.1-19-15.5-35.1-34.8-38.4-23.4-4.1-43.8 3.3-63.5 14.6-1.5.8-3.1 2.3-3.6 3.8-2.3 6.5-4.5 13.2-6.2 19.9-4.5 16.8-8.8 33.7-13 50.6-6.2 24.8-12.2 49.6-18.4 75.4zM718.5 489.3c5.1-19.2 9.9-37.3 14.8-55.6h15.2c16 0 23.5-6.4 27.2-22 6.6-27.4 13.4-54.7 20.3-82.1 4.3-17.1 8.8-34.2 13.2-51.4 5-19.7 10-39.4 15.1-59 4.1-16.1 8.4-32.2 12.5-48.3.3-1.3.3-2.7.9-3.8 4.6-9.7-.5-18.9-11.1-19.5-6-.3-12-.1-20-.1 2.4-7.2 4.9-13.2 6.5-19.5 2.4-9.1 4.7-18.3 6.2-27.6.9-6.1 3.5-8.6 9.4-10.3 28.9-8 58.1-11.4 88-8.4 24.3 2.5 44.8 17 45.8 44.7 0 .7.5 1.5 1 3.1 7.2-6 13.9-11.9 21-17.4 36.8-28.4 77.7-40.7 123.7-30.1 22 5.1 39.5 17.5 52.1 37.2 15.4 24 16.6 50.4 15 77-1.2 19-4.3 38.1-9 56.6-5.6 22.2-15.6 43.2-28.9 61.7-40.2 55.8-95.8 78.2-163.5 72.3-22.7-2-44.4-7.2-63-21.4-1.1-.9-2.8-1-4.3-1.6-6.1 23.3-12.1 46.2-18.2 69.7h38.5c-4.9 18.8-9.7 37-14.6 55.7-64.1.1-128.3.1-193.8.1zm199.1-168.6c9.3 2.3 18.3 5.3 27.4 6.6 25.5 3.5 49.6-.2 70.5-16.7 18.6-14.7 28.9-35 36.1-56.8 6.3-19.1 7.3-39.1 6.1-59.2-1.3-20.9-15.4-35.6-36-39.2-16.4-2.9-31.4 1.5-46.9 6.3-16.1 5.1-22.2 16.6-25.6 31.5-4 17.2-8.7 34.2-13 51.4-6.1 24.8-12.1 49.6-18.6 76.1z"
+});
+
+var _ref5 = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("path", {
+  className: "tappx-logo_svg__st0",
+  d: "M475.1 175.3c6-23.2 12.1-45 17.1-67.1 1.8-8.1 4.9-11.8 13.4-14.1C565.5 78.5 626 74.5 687.2 83.7c19.8 3 38.8 9.3 55.1 21.3 14.1 10.4 22.5 24.6 25.6 42.5 2.5 13.9.2 26.9-2.9 40-7.1 30.5-14.8 60.9-22.4 91.2-3.3 13.1-7.1 26-10.4 39.1-2.4 9.8 2.9 16.5 12.9 16.6 4.7.1 9.4 0 15.1 0-3.7 13.9-7.7 27-10.5 40.3-1.6 7.8-4.8 12-12.5 14.6-26.6 9.1-53.7 12.6-81.3 7.5-17.9-3.3-32.9-11.7-39.5-30.5-.7-2.1-2.3-3.9-3.8-6.2-18.2 17.8-39.6 29.6-64.4 34.4-31.1 6.1-61.7 5.1-90-11-6.2-3.5-12.3-8.3-16.7-13.9-20.4-25.7-22.6-55.3-12.3-84.6 14.1-40.1 47.1-59.4 86.4-68.8 40.9-9.8 82.2-8.8 125.3-.1 2.4-11.7 5.8-23.4 7-35.3 1.5-14.3-3.8-22-18.6-26-33.9-9.2-66.4-5.2-95.4 16.7-2.4 1.8-5.5 3.5-8.4 3.5-16.2.5-32.5.3-50.4.3zm93.2 163.5c7.7-1.4 14-1.6 19.5-3.7 9.5-3.6 20.8-7.1 24.5-17 5.9-15.7 9.2-32.5 13.3-48.9.4-1.5-1.9-5.2-3.3-5.4-28.3-4.4-56.2-8-78.1 18-11.9 14.1-10.7 41.8 4.9 51 5.9 3.6 13.5 4.3 19.2 6zM1540.7 394.3c4.7-19.4 9.1-37.9 13.8-56.2.4-1.7 2.7-3.6 4.5-4.2 19.6-6.6 37.2-16.5 52.2-30.7 14.3-13.6 28.1-27.6 42.1-41.4.6-.5 1-1.3 1.5-1.8 14-13.6 14.2-17.5 1.6-32.7-.8-1-1.5-2-2.1-3.2-6.7-12.3-13.3-24.7-20-37-5.5-10-11-20-16.8-29.8-3.5-5.9-8.5-9.7-15.7-9.8-5.7-.1-11.3 0-16.4 0 3.8-17.1 7.6-33.2 10.9-49.5.8-4.2 2.6-5.8 6.5-7.4 25.6-10.3 51.9-12.1 78.8-8.1 16.5 2.4 29.6 11 37.7 25.3 10.7 18.9 20.2 38.5 30.2 57.8 2.6 4.9 5.2 9.8 7.9 14.8 10.2-13 19.2-26 29.6-37.7 15.9-17.8 32.6-34.9 49.4-51.9 4.5-4.5 10.4-6.9 17.6-6.7 18.9.5 37.8.2 56.7.2h9.5c-4.4 16.7-10.1 32-12.2 47.8-1.7 13-8.8 17-19.4 21.3-22.7 9.4-40.9 25.6-58.2 42.8-11.4 11.3-22.5 23-33.5 34.7-1.1 1.2-1.6 4.3-.8 5.7 5.6 9.9 11.8 19.4 17.3 29.3 7.6 13.6 14.8 27.5 22.3 41.2 3.6 6.6 6.8 13.7 11.8 19 3.9 4.1 10.3 6.5 16 8.1 4.6 1.3 9.8.3 16.1.3-4.6 16.6-8.8 32.4-13.5 48.1-.8 2.6-3.2 5.7-5.6 6.7-31.1 12.4-62.7 14.5-94 1.3-6-2.5-11.7-7.2-15.9-12.3-6.9-8.4-12.8-17.6-18.2-27-9.7-16.8-18.7-34-28.3-51.8-3.1 3.4-6.1 6.6-8.8 10-11.6 14.7-22.2 30.2-34.7 44-12.5 13.8-26.7 26-40.2 38.8-1.3 1.3-3.7 2.1-5.6 2.1-24.7 0-49.3-.1-74.1-.1zM311.9 2.9c38.9.1 77.9.1 116.8.2-6 24.3-12 48.6-17.9 72.9-.6 2.3-.9 4.6-1.6 7.9h57.5c-5.7 21.8-11 42.3-16.6 63.6h-43c-15.8 0-15.9 0-19.6 15.7-3.1 12.8-5.8 25.6-8.9 38.3-5.2 21.5-10.6 43-16.1 64.4-2.7 10.5-5.7 21-8.5 31.5-.4 1.5-.7 3.1-.9 4.6-2.2 19 4.4 28.1 23.4 30.9 9.3 1.4 18.8 1.3 28.2 1.9-2.6 10.8-5.3 21.8-8 32.7-1 4.3-2.6 8.7-2.9 13-.5 9.1-5.9 12.1-13.9 13.7-35.2 7-70.4 8.6-104.9-3.2-19.2-6.5-33.6-18.6-40.5-39.3-4.5-13.5-5.6-26.7-2.7-39.9 4.6-21.3 11.3-42.1 16.7-63.2 3.2-12.4 5.5-25.1 8.6-37.6 4.6-18.7 9.6-37.3 14.4-56 .6-2.2.8-4.5 1.4-7.8h-35.2c3.7-12.9 7.1-24.5 10.3-36.2 1.6-6.1 3.2-12.2 4-18.4.9-6.5 3.5-9.4 10.6-8.8 9.1.7 18.3.2 27.2.2 7.8-27.3 15-54.2 22.1-81.1zM166.3 175.7c-2.3 21.2-12.3 36.3-30 45.5-18.5 9.7-38.2 11.5-57.8 4-25.5-9.8-41.5-34.5-30.2-62.1 8-19.7 24.7-31 45.7-35.1 21-4.1 40.3-.2 56.5 13.9 10.2 8.9 13.8 21.6 15.8 33.8z"
+});
 
 function SvgTappxLogo(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__["createElement"]("svg", _extends({
-    baseProfile: "tiny",
+    id: "tappx-logo_svg__Layer_1",
+    x: 0,
+    y: 0,
     viewBox: "0 0 1920 500",
-    overflow: "visible"
-  }, props), _ref);
+    xmlSpace: "preserve"
+  }, props), _ref, _ref2, _ref3, _ref4, _ref5);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (SvgTappxLogo);
@@ -33927,12 +34017,15 @@ const axios_1 = __importDefault(__webpack_require__(/*! axios */ "./node_modules
 function getBundles() {
     return __awaiter(this, void 0, void 0, function* () {
         let bundles;
-        yield fetch("/bundles")
+        yield axios_1.default
+            .get("/bundles")
             .then((response) => {
-            return response.json();
+            console.log(">>>>>", response);
+            return response;
         })
-            .then((data) => {
-            bundles = data;
+            .then((res) => {
+            console.log("DATA>>", res.data);
+            bundles = res.data;
         });
         return bundles;
     });
@@ -34040,6 +34133,7 @@ exports.breakpoints = {
     md: 600,
     lg: 801,
     xl: 1025,
+    xxl: 1025,
 };
 exports.media = Object.entries(exports.breakpoints).reduce((acc, [label, size]) => {
     return Object.assign(Object.assign({}, acc), { [label]: (breakpointCss) => styled_components_1.css `
@@ -34062,12 +34156,7 @@ exports.TappxGradient = styled_components_1.css `
     rgba(255, 102, 0, 1) 100%
   );
 `;
-exports.AppContainer = styled_components_1.default.div `
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between; */
-  /* min-height: 100vw; */
-`;
+exports.AppContainer = styled_components_1.default.div ``;
 
 
 /***/ })

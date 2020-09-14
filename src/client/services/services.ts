@@ -2,12 +2,15 @@ import axios from "axios";
 
 export async function getBundles() {
   let bundles;
-  await fetch("/bundles")
+  await axios
+    .get("/bundles")
     .then((response) => {
-      return response.json();
+      console.log(">>>>>", response);
+      return response;
     })
-    .then((data) => {
-      bundles = data;
+    .then((res) => {
+      console.log("DATA>>", res.data);
+      bundles = res.data;
     });
   return bundles;
 }

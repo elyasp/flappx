@@ -1,23 +1,30 @@
 import styled from "styled-components";
-import { media, TappxGradient } from "../../styles";
+import { media } from "../../styles";
 
 export const Header = styled.nav`
-  ${TappxGradient}
-  padding: 1em;
+  background-color: #333333;
+  padding: 1em 5vw;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: column;
+  border-bottom: solid 1em #fa0043;
+
+  ${media.xxl(`
+    flex-direction: column; 
+  `)}
 
   div {
-    min-width: 30vw;
     margin-top: 1em;
+    width: fit-content;
+
+    svg {
+      height: 5em;
+    }
   }
 
   h3 {
     color: white;
     font-weight: 400;
-    font-style: italic;
     font-size: 2em;
 
     ${media.md(`

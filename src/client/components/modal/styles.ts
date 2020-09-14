@@ -32,7 +32,7 @@ export const Form = styled.form`
   margin: 0;
   border-radius: 10px;
   color: white;
-  padding: 2em 0.5em;
+  padding: 1em 0.7em;
   background-color: #1f383f;
 
   div {
@@ -56,27 +56,59 @@ export const Form = styled.form`
   span {
     display: flex;
     justify-content: center;
-    margin-top: 2em;
   }
 `;
 
 export const SubmitButton = styled.button`
   border: none;
-  padding: 0.5em;
+  padding: 0.5em 1em;
   background-color: #ef003d;
   color: white;
   font-weight: 600;
   font-size: 1.1em;
   cursor: pointer;
+  margin-top: 1em;
+  transition: 300ms;
+  border-radius: 0.3em;
+
+  &:hover {
+    background-color: #a3002c;
+    transition: 300ms;
+  }
 `;
 
 export const CancelButton = styled.button`
   border: none;
   cursor: pointer;
-  padding: 0.5em;
-  background-color: #0a0a0a;
+  padding: 0.5em 1em;
+  background-color: #1f1f1f;
   color: white;
   font-weight: 600;
   font-size: 1.1em;
   margin-left: 1em;
+  margin-top: 1em;
+  transition: 300ms;
+  border-radius: 0.3em;
+
+  &:hover {
+    background-color: #000000;
+    transition: 300ms;
+  }
+`;
+
+export const ErrorMessage = styled.div`
+  color: white;
+
+  ul {
+    padding-left: 1em;
+  }
+
+  h6 {
+    margin: 0;
+    color: #ff3636;
+  }
+
+  li {
+    font-size: 0.7em;
+  }
 `;
