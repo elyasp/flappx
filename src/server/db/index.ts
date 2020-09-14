@@ -2,30 +2,29 @@ import * as mysql from "mysql";
 import config from "../config";
 import Bundles from "./bundles";
 
-// export const connection = mysql.createPool(config.mysql);
+export const Connection = mysql.createPool(config.mysql);
 
-var connection;
+// Connection.connect(function (error) {
+//   if (error) {
+//     console.log("DB Connection Error>>>", error);
+//     setTimeout(handleError, 3000);
+//   }
+// });
 
-function dbConnection() {
-  connection = mysql.createConnection(config.mysql);
+function handleError() {
+  var connection = mysql.createConnection(config.mysql);
 
-  connection.connect(function (error) {
-    if (error) {
-      console.log("DB Connection Error>>>", error);
-      setTimeout(dbConnection, 3000);
-    }
-  });
-  connection.on("Error", function (error) {
-    console.log("DATABASE ERROR", error);
+  connection.on("error", function (error) {
+    console.log("DATABASE DISCONNECTED", error);
     if (error.code === "PROTOCOL_CONNECTION_LOST") {
-      dbConnection();
+      handleError();
     } else {
       throw error;
     }
   });
 }
 
-dbConnection();
+handleError();
 
 export default {
   Bundles,
