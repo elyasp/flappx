@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { media, TappxGradient, LayeredBoxShadow } from "../../styles";
+import { media, LayeredBoxShadow } from "../../styles";
 
 export const ManagerWrap = styled.div`
   min-height: calc(100vh - 5vh);

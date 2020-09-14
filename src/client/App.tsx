@@ -1,11 +1,10 @@
 import React from "react";
-import { BundleManager, Nav, FooterComponent } from "./components";
-import { AppContainer } from "./styles";
+import { BundleManager, Header, FooterComponent } from "./components";
 
 export const App: React.FC = () => {
   return (
     <>
-      <Nav />
+      <Header />
       <BundleManager />
       <FooterComponent />
     </>

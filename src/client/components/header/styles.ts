@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { media } from "../../styles";
 
-export const Header = styled.nav`
+export const HeaderWrap = styled.nav`
   background-color: #333333;
   padding: 1em 5vw;
   display: flex;
@@ -9,7 +9,7 @@ export const Header = styled.nav`
   align-items: center;
   border-bottom: solid 1em #fa0043;
 
-  ${media.xxl(`
+  ${media.xl(`
     flex-direction: column; 
   `)}
 

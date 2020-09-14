@@ -19,7 +19,7 @@ Or, instead of running locally, find the app at the following url
 
 https://flappx.herokuapp.com/
 
-TODO if i had more time:
+TODO- (if i had more time)
 
 7. Fix Searchbar
 8. Remove typescript errors by extending tsconfig and typeguarding each argument, even where it's not needed.

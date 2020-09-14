@@ -33013,7 +33013,7 @@ const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules
 const components_1 = __webpack_require__(/*! ./components */ "./src/client/components/index.ts");
 exports.App = () => {
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(components_1.Nav, null),
+        react_1.default.createElement(components_1.Header, null),
         react_1.default.createElement(components_1.BundleManager, null),
         react_1.default.createElement(components_1.FooterComponent, null)));
 };
@@ -33263,8 +33263,8 @@ exports.BundleManager = () => {
     }, []);
     // BUG on implementing search function, filter not working properly
     // - correctly receives json object
-    // - properly iterates value in Chrome devtools
-    // - returns empty array
+    // - properly iterates values in Chrome devtools
+    // - filter, returns empty array
     // useEffect(() => {
     //   setSearchedBundles(
     //     bundles &&
@@ -33273,7 +33273,6 @@ exports.BundleManager = () => {
     //       })
     //   );
     // }, [bundles, search]);
-    console.log(">>>", bundles);
     return (react_1.default.createElement(react_1.default.Fragment, null,
         isOpen && react_1.default.createElement(components_1.Modal, { closeModal: () => setIsOpen(false) }),
         bundles.length !== 0 ? (react_1.default.createElement(styles_1.ManagerWrap, null,
@@ -33445,7 +33444,6 @@ exports.Footer = styled_components_1.default.footer `
   display: flex;
   align-items: center;
   justify-content: center;
-  /* position: absolute; */
   bottom: 0;
   left: 0;
   width: 100%;
@@ -33465,6 +33463,101 @@ exports.Footer = styled_components_1.default.footer `
 
 /***/ }),
 
+/***/ "./src/client/components/header/header.tsx":
+/*!*************************************************!*\
+  !*** ./src/client/components/header/header.tsx ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Header = void 0;
+const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/header/styles.ts");
+const tappx_logo_svg_1 = __importDefault(__webpack_require__(/*! ../../images/tappx-logo.svg */ "./src/client/images/tappx-logo.svg"));
+exports.Header = () => {
+    return (react_1.default.createElement(styles_1.HeaderWrap, null,
+        react_1.default.createElement("div", null,
+            react_1.default.createElement(tappx_logo_svg_1.default, null)),
+        react_1.default.createElement("h3", null, "Interactive Bundle Manager")));
+};
+
+
+/***/ }),
+
+/***/ "./src/client/components/header/index.ts":
+/*!***********************************************!*\
+  !*** ./src/client/components/header/index.ts ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Header = void 0;
+var header_1 = __webpack_require__(/*! ./header */ "./src/client/components/header/header.tsx");
+Object.defineProperty(exports, "Header", { enumerable: true, get: function () { return header_1.Header; } });
+
+
+/***/ }),
+
+/***/ "./src/client/components/header/styles.ts":
+/*!************************************************!*\
+  !*** ./src/client/components/header/styles.ts ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.HeaderWrap = void 0;
+const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
+const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
+exports.HeaderWrap = styled_components_1.default.nav `
+  background-color: #333333;
+  padding: 1em 5vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: solid 1em #fa0043;
+
+  ${styles_1.media.xl(`
+    flex-direction: column; 
+  `)}
+
+  div {
+    margin-top: 1em;
+    width: fit-content;
+
+    svg {
+      height: 5em;
+    }
+  }
+
+  h3 {
+    color: white;
+    font-weight: 400;
+    font-size: 2em;
+
+    ${styles_1.media.md(`
+      font-size: 0.8em;
+  `)}
+  }
+`;
+
+
+/***/ }),
+
 /***/ "./src/client/components/index.ts":
 /*!****************************************!*\
   !*** ./src/client/components/index.ts ***!
@@ -33475,15 +33568,15 @@ exports.Footer = styled_components_1.default.footer `
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FooterComponent = exports.Nav = exports.Modal = exports.BundleManager = exports.BundleItem = void 0;
+exports.FooterComponent = exports.Header = exports.Modal = exports.BundleManager = exports.BundleItem = void 0;
 var bundleItem_1 = __webpack_require__(/*! ./bundleItem */ "./src/client/components/bundleItem/index.ts");
 Object.defineProperty(exports, "BundleItem", { enumerable: true, get: function () { return bundleItem_1.BundleItem; } });
 var bundleManager_1 = __webpack_require__(/*! ./bundleManager */ "./src/client/components/bundleManager/index.ts");
 Object.defineProperty(exports, "BundleManager", { enumerable: true, get: function () { return bundleManager_1.BundleManager; } });
 var modal_1 = __webpack_require__(/*! ./modal */ "./src/client/components/modal/index.ts");
 Object.defineProperty(exports, "Modal", { enumerable: true, get: function () { return modal_1.Modal; } });
-var nav_1 = __webpack_require__(/*! ./nav */ "./src/client/components/nav/index.ts");
-Object.defineProperty(exports, "Nav", { enumerable: true, get: function () { return nav_1.Nav; } });
+var header_1 = __webpack_require__(/*! ./header */ "./src/client/components/header/index.ts");
+Object.defineProperty(exports, "Header", { enumerable: true, get: function () { return header_1.Header; } });
 var footer_1 = __webpack_require__(/*! ./footer */ "./src/client/components/footer/index.ts");
 Object.defineProperty(exports, "FooterComponent", { enumerable: true, get: function () { return footer_1.FooterComponent; } });
 
@@ -33768,101 +33861,6 @@ exports.ErrorMessage = styled_components_1.default.div `
 
 /***/ }),
 
-/***/ "./src/client/components/nav/index.ts":
-/*!********************************************!*\
-  !*** ./src/client/components/nav/index.ts ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Nav = void 0;
-var nav_1 = __webpack_require__(/*! ./nav */ "./src/client/components/nav/nav.tsx");
-Object.defineProperty(exports, "Nav", { enumerable: true, get: function () { return nav_1.Nav; } });
-
-
-/***/ }),
-
-/***/ "./src/client/components/nav/nav.tsx":
-/*!*******************************************!*\
-  !*** ./src/client/components/nav/nav.tsx ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Nav = void 0;
-const react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-const styles_1 = __webpack_require__(/*! ./styles */ "./src/client/components/nav/styles.ts");
-const tappx_logo_svg_1 = __importDefault(__webpack_require__(/*! ../../images/tappx-logo.svg */ "./src/client/images/tappx-logo.svg"));
-exports.Nav = () => {
-    return (react_1.default.createElement(styles_1.Header, null,
-        react_1.default.createElement("div", null,
-            react_1.default.createElement(tappx_logo_svg_1.default, null)),
-        react_1.default.createElement("h3", null, "Interactive Bundle Manager")));
-};
-
-
-/***/ }),
-
-/***/ "./src/client/components/nav/styles.ts":
-/*!*********************************************!*\
-  !*** ./src/client/components/nav/styles.ts ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Header = void 0;
-const styled_components_1 = __importDefault(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
-const styles_1 = __webpack_require__(/*! ../../styles */ "./src/client/styles/index.ts");
-exports.Header = styled_components_1.default.nav `
-  background-color: #333333;
-  padding: 1em 5vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-bottom: solid 1em #fa0043;
-
-  ${styles_1.media.xxl(`
-    flex-direction: column; 
-  `)}
-
-  div {
-    margin-top: 1em;
-    width: fit-content;
-
-    svg {
-      height: 5em;
-    }
-  }
-
-  h3 {
-    color: white;
-    font-weight: 400;
-    font-size: 2em;
-
-    ${styles_1.media.md(`
-      font-size: 0.8em;
-  `)}
-  }
-`;
-
-
-/***/ }),
-
 /***/ "./src/client/images/tappx-logo.svg":
 /*!******************************************!*\
   !*** ./src/client/images/tappx-logo.svg ***!
@@ -34020,11 +34018,9 @@ function getBundles() {
         yield axios_1.default
             .get("/bundles")
             .then((response) => {
-            console.log(">>>>>", response);
             return response;
         })
             .then((res) => {
-            console.log("DATA>>", res.data);
             bundles = res.data;
         });
         return bundles;
@@ -34105,35 +34101,16 @@ __exportStar(__webpack_require__(/*! ./styles */ "./src/client/styles/styles.ts"
 
 "use strict";
 
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppContainer = exports.TappxGradient = exports.LayeredBoxShadow = exports.media = exports.breakpoints = void 0;
-const styled_components_1 = __importStar(__webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js"));
+exports.TappxGradient = exports.LayeredBoxShadow = exports.media = exports.breakpoints = void 0;
+const styled_components_1 = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 exports.breakpoints = {
     xs: 320,
     sm: 480,
     md: 600,
     lg: 801,
     xl: 1025,
-    xxl: 1025,
+    xxl: 1525,
 };
 exports.media = Object.entries(exports.breakpoints).reduce((acc, [label, size]) => {
     return Object.assign(Object.assign({}, acc), { [label]: (breakpointCss) => styled_components_1.css `
@@ -34156,7 +34133,6 @@ exports.TappxGradient = styled_components_1.css `
     rgba(255, 102, 0, 1) 100%
   );
 `;
-exports.AppContainer = styled_components_1.default.div ``;
 
 
 /***/ })

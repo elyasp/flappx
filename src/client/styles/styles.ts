@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import { css } from "styled-components";
 
 interface BreakPoints {
   xs: number;
@@ -15,7 +15,7 @@ export const breakpoints: BreakPoints = {
   md: 600,
   lg: 801,
   xl: 1025,
-  xxl: 1025,
+  xxl: 1525,
 };
 
 type BreakpointKeys = keyof BreakPoints;
@@ -50,5 +50,3 @@ export const TappxGradient = css`
     rgba(255, 102, 0, 1) 100%
   );
 `;
-
-export const AppContainer = styled.div``;

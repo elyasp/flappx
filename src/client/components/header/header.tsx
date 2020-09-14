@@ -1,14 +1,14 @@
 import React from "react";
-import { Header } from "./styles";
+import { HeaderWrap } from "./styles";
 import Tappx from "../../images/tappx-logo.svg";
 
-export const Nav = () => {
+export const Header = () => {
   return (
-    <Header>
+    <HeaderWrap>
       <div>
         <Tappx />
       </div>
       <h3>Interactive Bundle Manager</h3>
-    </Header>
+    </HeaderWrap>
   );
 };

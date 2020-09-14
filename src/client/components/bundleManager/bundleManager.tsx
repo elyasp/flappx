@@ -9,7 +9,7 @@ import {
   NoBundles,
 } from "./styles";
 
-export interface IBundle {
+interface IBundle {
   name: string;
   bundle: string;
   company: string;
@@ -34,8 +34,8 @@ export const BundleManager = () => {
 
   // BUG on implementing search function, filter not working properly
   // - correctly receives json object
-  // - properly iterates value in Chrome devtools
-  // - returns empty array
+  // - properly iterates values in Chrome devtools
+  // - filter, returns empty array
 
   // useEffect(() => {
   //   setSearchedBundles(
@@ -45,7 +45,7 @@ export const BundleManager = () => {
   //       })
   //   );
   // }, [bundles, search]);
-  console.log(">>>", bundles);
+
   return (
     <>
       {isOpen && <Modal closeModal={() => setIsOpen(false)}></Modal>}

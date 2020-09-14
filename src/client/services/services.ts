@@ -5,11 +5,9 @@ export async function getBundles() {
   await axios
     .get("/bundles")
     .then((response) => {
-      console.log(">>>>>", response);
       return response;
     })
     .then((res) => {
-      console.log("DATA>>", res.data);
       bundles = res.data;
     });
   return bundles;
